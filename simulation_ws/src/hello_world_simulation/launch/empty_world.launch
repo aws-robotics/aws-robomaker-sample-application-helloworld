@@ -1,5 +1,5 @@
 <launch>
-  <!-- Always set GUI to false for B9 Simulation
+  <!-- Always set GUI to false for AWS RoboMaker Simulation
        Use gui:=true on roslaunch command-line to run with a gui.
   -->
   <arg name="gui" default="false"/>
