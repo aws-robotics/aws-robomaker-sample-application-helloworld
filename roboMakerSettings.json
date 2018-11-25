@@ -1,0 +1,90 @@
+{
+  "runConfigurations": [{
+      "id": "HelloWorld_Cfg01",
+      "name": "HelloWorld Robot",
+      "type": "colcon build",
+      "cfg": {
+        "workingDir": "./HelloWorld/robot_ws",
+        "cmdArgs": ""
+      }
+    }, {
+      "id": "HelloWorld_Cfg02",
+      "name": "HelloWorld Robot",
+      "type": "colcon bundle",
+      "cfg": {
+        "workingDir": "./HelloWorld/robot_ws",
+        "cmdArgs": ""
+      }
+    }, {
+      "id": "HelloWorld_Cfg03",
+      "name": "HelloWorld Simulation",
+      "type": "colcon build",
+      "cfg": {
+        "workingDir": "./HelloWorld/simulation_ws",
+        "cmdArgs": ""
+      }
+    }, {
+      "id": "HelloWorld_Cfg04",
+      "name": "HelloWorld Simulation",
+      "type": "colcon bundle",
+      "cfg": {
+        "workingDir": "./HelloWorld/simulation_ws",
+        "cmdArgs": ""
+      }
+    }, {
+      "id": "HelloWorld_SimulationJob1",
+      "name": "HelloWorld",
+      "type": "simulation",
+      "cfg": {
+        "robotApp": {
+          "name": "RoboMakerHelloWorldRobot",
+          "s3Bucket": "<bucket name for your robot bundle>",
+          "sourceBundleFile": "./HelloWorld/robot_ws/bundle/output.tar.gz",
+          "architecture": "X86_64",
+          "robotSoftwareSuite": {
+            "version": "Kinetic",
+            "name": "ROS"
+          },
+          "launchConfig": {
+            "packageName": "hello_world_robot",
+            "launchFile": "rotate.launch"
+          }
+        },
+        "simulationApp": {
+          "name": "RoboMakerHelloWorldSimulation",
+          "s3Bucket": "<bucket name for your simulation bundle>",
+          "sourceBundleFile": "./HelloWorld/simulation_ws/bundle/output.tar.gz",
+          "architecture": "X86_64",
+          "launchConfig": {
+            "packageName": "hello_world_simulation",
+            "launchFile": "empty_world.launch"
+          },
+          "robotSoftwareSuite": {
+            "version": "Kinetic",
+            "name": "ROS"
+          },
+          "simulationSoftwareSuite": {
+            "name": "Gazebo",
+            "version": "7"
+          },
+          "renderingEngine": {
+            "name": "OGRE",
+            "version": "1.x"
+          }
+        },
+        "simulation": {
+          "outputLocation": "<bucket name for your job outputs>",
+          "failureBehavior": "Fail",
+          "maxJobDurationInSeconds": 28800,
+          "iamRole": "<your B9 role ARN>"
+        }
+      }
+    },
+    {
+      "id": "HelloWorld_wf1",
+      "type": "workflow",
+      "name": "HelloWorld - Build and Bundle All",
+      "runCfgIds": ["HelloWorld_Cfg01", "HelloWorld_Cfg02", "HelloWorld_Cfg03", "HelloWorld_Cfg04"]
+    }
+  ]
+}

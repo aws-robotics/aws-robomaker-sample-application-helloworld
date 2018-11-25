@@ -1,0 +1,6 @@
+<launch>
+  <!-- View helper launches the GUI -->
+  <include file="$(find hello_world_simulation)/launch/empty_world.launch">
+    <arg name="gui" value="true"/>
+  </include>
+</launch>
