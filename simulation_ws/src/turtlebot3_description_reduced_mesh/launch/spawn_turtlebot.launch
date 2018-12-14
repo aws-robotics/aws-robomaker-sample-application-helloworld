@@ -1,6 +1,6 @@
 <launch>
   <!-- Optional environment variable, default is "waffle_pi". Note that "burger" does not have a camera -->
-  <arg name="model" default="$(optenv TURTLEBOT3_MODEL waffle_pi)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="model" default="$(optenv TURTLEBOT3_MODEL burger)" doc="model type [burger, waffle, waffle_pi]"/>
 
   <!-- You may override arg parmaters when including this launch file -->
   <arg name="x_pos" default="0.0"/>
