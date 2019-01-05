@@ -22,6 +22,6 @@ before_install:
   # Prepare rosdep to install dependencies.
   - sudo rosdep init
 install:
-  - make setup
+  - sudo make setup
 script:
-  - make build
+  - sudo make build
