@@ -22,7 +22,6 @@ before_install:
   # Prepare rosdep to install dependencies.
   - sudo rosdep init
 install:
-  - sudo ./scripts/setup.sh
+  - make setup
 script:
-  - sudo sh -c "./scripts/build.sh robot_ws"
-  - sudo sh -c "./scripts/build.sh simulation_ws"
+  - make build
