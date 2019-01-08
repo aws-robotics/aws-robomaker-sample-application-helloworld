@@ -1,0 +1,27 @@
+sudo: required 
+language: generic
+dist: xenial
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+    recipients:
+      - ros-contributions@amazon.com
+      - travis-build@platform-notifications.robomaker.aws.a2z.com
+env:
+  matrix:
+    - ROS_DISTRO="kinetic" ROS_REPOSITORY_PATH=http://packages.ros.org/ros/ubuntu ROS_CI_DESKTOP="`lsb_release -cs`"
+before_install:
+  - sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main\" > /etc/apt/sources.list.d/ros-latest.list"
+  - sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+  - sudo apt-get update -qq
+  - sudo apt-get install dpkg
+  - sh -c "echo $ROS_CI_DESKTOP"
+  - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-ros-base
+  - source /opt/ros/$ROS_DISTRO/setup.bash
+  # Prepare rosdep to install dependencies.
+  - sudo rosdep init
+install:
+  - sudo make setup
+script:
+  - make build
