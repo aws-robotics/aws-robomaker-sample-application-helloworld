@@ -80,7 +80,7 @@ source install/local_setup.sh
 colcon bundle
 ```
 
-This produces the artifacts `robot_ws/build/output.tar.gz` and `simulation_ws/build/output.tar.gz` respectively. 
+This produces the artifacts `robot_ws/bundle/output.tar.gz` and `simulation_ws/bundle/output.tar.gz` respectively. 
 You'll need to upload these to an s3 bucket, then you can use these files to 
 [create a robot application](https://docs.aws.amazon.com/robomaker/create-robot-application.html),  
 [create a simulation application](https://docs.aws.amazon.com/robomaker/create-simulation-application.html), 
