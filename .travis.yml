@@ -22,17 +22,9 @@ env:
   - GH_USER_EMAIL="travis@travis-ci.org"
   - AWS_DEFAULT_REGION=us-west-2
 before_install:
+- pip install --user awscli
 - openssl aes-256-cbc -K $encrypted_e9b424f4a194_key -iv $encrypted_e9b424f4a194_iv
   -in github_deploy.pem.enc -out github_deploy.pem -d
-- sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main\"
-  > /etc/apt/sources.list.d/ros-latest.list"
-- sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
-- sudo apt-get update -qq
-- sudo apt-get install dpkg
-- sh -c "echo $ROS_CI_DESKTOP"
-- sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-ros-base
-- source /opt/ros/$ROS_DISTRO/setup.bash
-- sudo rosdep init
 install:
 - git clone https://github.com/aws-robotics/travis-scripts.git .ros_ci
 script:
