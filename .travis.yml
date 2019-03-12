@@ -32,15 +32,19 @@ script:
 before_deploy:
 - . .ros_ci/before_deploy.sh
 deploy:
-  provider: s3
-  access_key_id: "$AWS_ACCESS_KEY_ID"
-  secret_access_key: "$AWS_SECRET_ACCESS_KEY"
-  bucket: "$S3_BUCKET_NAME"
-  local_dir: shared
-  skip_cleanup: true
-  wait-until-deployed: true
-  on:
-    branch: master
-  upload-dir: travis/$SA_NAME
+  - provider: s3
+    access_key_id: "$AWS_ACCESS_KEY_ID"
+    secret_access_key: "$AWS_SECRET_ACCESS_KEY"
+    bucket: "$S3_BUCKET_NAME"
+    local_dir: shared
+    skip_cleanup: true
+    wait-until-deployed: true
+    on:
+      branch: master
+    upload-dir: travis/$SA_NAME
+  - provider: script
+    script: bash .ros_ci/codepipeline_deploy.sh
+    on:
+      branch: master
 after_deploy:
 - .ros_ci/post_deploy.sh
