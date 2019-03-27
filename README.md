@@ -72,12 +72,12 @@ After colcon-ros-bundle is installed you need to build your robot or simulation,
 # Bundling Robot Application
 cd robot_ws
 source install/local_setup.sh
-colcon bundle
+colcon bundle --bundle-version 1
 
 # Bundling Simulation Application
 cd simulation_ws
 source install/local_setup.sh
-colcon bundle
+colcon bundle --bundle-version 1
 ```
 
 This produces the artifacts `robot_ws/bundle/output.tar.gz` and `simulation_ws/bundle/output.tar.gz` respectively. 
