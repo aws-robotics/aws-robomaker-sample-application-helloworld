@@ -63,6 +63,7 @@ Launch the application with the following commands:
 You first need to install colcon-ros-bundle. Python 3.5 or above is required. 
 
 ```bash
+pip3 install -U setuptools
 pip3 install colcon-ros-bundle
 ```
 
