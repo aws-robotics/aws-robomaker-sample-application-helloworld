@@ -72,15 +72,15 @@ After colcon-ros-bundle is installed you need to build your robot or simulation,
 # Bundling Robot Application
 cd robot_ws
 source install/local_setup.sh
-colcon bundle --bundle-version 1
+colcon bundle
 
 # Bundling Simulation Application
 cd simulation_ws
 source install/local_setup.sh
-colcon bundle --bundle-version 1
+colcon bundle
 ```
 
-This produces the artifacts `robot_ws/bundle/output.tar.gz` and `simulation_ws/bundle/output.tar.gz` respectively. 
+This produces the artifacts `robot_ws/bundle/output.tar` and `simulation_ws/bundle/output.tar` respectively. 
 You'll need to upload these to an s3 bucket, then you can use these files to 
 [create a robot application](https://docs.aws.amazon.com/robomaker/create-robot-application.html),  
 [create a simulation application](https://docs.aws.amazon.com/robomaker/create-simulation-application.html), 

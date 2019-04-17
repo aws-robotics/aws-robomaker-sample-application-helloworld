@@ -39,7 +39,7 @@
         "robotApp": {
           "name": "RoboMakerHelloWorldRobot",
           "s3Bucket": "<bucket name for your robot bundle>",
-          "sourceBundleFile": "./HelloWorld/robot_ws/bundle/output.tar.gz",
+          "sourceBundleFile": "./HelloWorld/robot_ws/bundle/output.tar",
           "architecture": "X86_64",
           "robotSoftwareSuite": {
             "version": "Kinetic",
@@ -53,7 +53,7 @@
         "simulationApp": {
           "name": "RoboMakerHelloWorldSimulation",
           "s3Bucket": "<bucket name for your simulation bundle>",
-          "sourceBundleFile": "./HelloWorld/simulation_ws/bundle/output.tar.gz",
+          "sourceBundleFile": "./HelloWorld/simulation_ws/bundle/output.tar",
           "architecture": "X86_64",
           "launchConfig": {
             "packageName": "hello_world_simulation",
