@@ -1,3 +1,1 @@
-# kinetic.rosinstall
-- setup-file: {local-name: /opt/ros/kinetic/setup.sh}
 - git: {local-name: src/turtlebot3_simulations, uri: "https://github.com/ROBOTIS-GIT/turtlebot3_simulations", version: 1.2.0}
