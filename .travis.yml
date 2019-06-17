@@ -27,7 +27,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_e9b424f4a194_key -iv $encrypted_e9b424f4a194_iv
   -in github_deploy.pem.enc -out github_deploy.pem -d
 install:
-- git clone https://github.com/aws-robotics/travis-scripts.git .ros_ci
+- git clone -b use-latest-colcon-bundle https://github.com/aws-robotics/travis-scripts.git .ros_ci
 script:
 - . .ros_ci/add_tag.sh
 - while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
