@@ -1,9 +1,0 @@
-<launch>
-  <!-- bringup turtlebot3 -->
-  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_robot.launch"/>
-  
-  <!-- deploy rotate system -->
-  <include file="$(find hello_world_robot)/launch/rotate.launch">
-    <arg name="use_sim_time" value="false"/>
-  </include>
-</launch>
