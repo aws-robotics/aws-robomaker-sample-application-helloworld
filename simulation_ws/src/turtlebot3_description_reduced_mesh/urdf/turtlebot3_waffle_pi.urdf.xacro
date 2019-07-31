@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 <robot name="turtlebot3_waffle_pi" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find turtlebot3_description_reduced_mesh)/urdf/common_properties.xacro"/>
+  <xacro:include filename="$(find turtlebot3_description_reduced_mesh)/urdf/turtlebot3_waffle_pi.gazebo.xacro"/>
+
   <link name="base_footprint"/>
 
   <joint name="base_joint" type="fixed">
@@ -212,5 +214,4 @@
   </joint>
   <link name="camera_rgb_optical_frame"/>
 
-  <xacro:include filename="$(find turtlebot3_description_reduced_mesh)/urdf/turtlebot3_waffle_pi.gazebo.xacro"/>
 </robot>
