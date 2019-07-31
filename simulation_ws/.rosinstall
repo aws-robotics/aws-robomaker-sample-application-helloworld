@@ -1,1 +1,2 @@
-- git: {local-name: src/deps/turtlebot3_simulations, uri: "https://github.com/ROBOTIS-GIT/turtlebot3_simulations", version: 1.2.0}
+# - git: {local-name: src/deps/turtlebot3_simulations, uri: "https://github.com/ROBOTIS-GIT/turtlebot3_simulations", version: 1.2.0}
+- git: {local-name: src/deps/xacro, uri: "https://github.com/kazuki0824/xacro", version: ros2}
