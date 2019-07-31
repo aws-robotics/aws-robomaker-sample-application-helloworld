@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
- Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this
  software and associated documentation files (the "Software"), to deal in the Software
@@ -16,32 +16,32 @@
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
+import time
 
-import rospy
+import rclpy
+from rclpy.node import Node
+from rclpy.time import Time
+
 from geometry_msgs.msg import Twist
 
-class Rotator():
+class Rotator(Node):
     def __init__(self):
-        self._cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+        super().__init__('rotate')
+        self._cmd_pub = self.create_publisher(Twist, '/cmd_vel')
 
     def rotate_forever(self):
-        self.twist = Twist()
-
-        r = rospy.Rate(10)
-        while not rospy.is_shutdown():
-            self.twist.angular.z = 0.1
-            self._cmd_pub.publish(self.twist)
-            rospy.loginfo("Rotating robot: %s", self.twist)
-            r.sleep()
+        twist = Twist()
+        while rclpy.ok():
+            twist.angular.z = 0.1
+            self._cmd_pub.publish(twist)
+            self.get_logger().info('Rotating robot: {}'.format(twist))
+            time.sleep(0.1)
 
 
-def main():
-    rospy.init_node('rotate')
-    try:
-        rotator = Rotator()
-        rotator.rotate_forever()
-    except rospy.ROSInterruptException:
-        pass
+def main(args=None):
+    rclpy.init(args=args)
+    rotator = Rotator()
+    rotator.rotate_forever()
 
 if __name__ == '__main__':
     main()
