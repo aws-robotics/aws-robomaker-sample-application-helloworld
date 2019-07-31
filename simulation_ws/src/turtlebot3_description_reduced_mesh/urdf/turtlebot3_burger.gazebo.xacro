@@ -71,7 +71,7 @@
   </gazebo>
 
   <gazebo>
-    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+    <plugin name="turtlebot3_imu" filename="libgazebo_ros_imu_sensor.so">
       <alwaysOn>true</alwaysOn>
       <bodyName>imu_link</bodyName>
       <frameName>imu_link</frameName>
@@ -125,7 +125,7 @@
           <stddev>0.01</stddev>
         </noise>
       </ray>
-      <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
+      <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_ray_sensor.so">
         <topicName>scan</topicName>
         <frameName>base_scan</frameName>
       </plugin>
