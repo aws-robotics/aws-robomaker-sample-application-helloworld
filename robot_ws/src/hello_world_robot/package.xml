@@ -8,7 +8,7 @@
   <license>MIT</license>
   <author email="ros-contributions@amazon.com">AWS RoboMaker</author>
   <maintainer email="ros-contributions@amazon.com">AWS RoboMaker</maintainer>
-  <buildtool_depend>ament</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
   <depend>rclpy</depend>
   <depend>geometry_msgs</depend>
   <exec_depend>turtlebot3_bringup</exec_depend>
