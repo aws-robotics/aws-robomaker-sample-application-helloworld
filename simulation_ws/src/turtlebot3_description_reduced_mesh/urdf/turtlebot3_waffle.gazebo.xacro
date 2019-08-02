@@ -59,55 +59,94 @@
   </gazebo>
 
   <gazebo>
-    <plugin name="turtlebot3_waffle_controller" filename="libgazebo_ros_diff_drive.so">
-      <commandTopic>cmd_vel</commandTopic>
-      <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
-      <odometrySource>world</odometrySource>
-      <publishOdomTF>true</publishOdomTF>
-      <robotBaseFrame>base_footprint</robotBaseFrame>
-      <publishWheelTF>false</publishWheelTF>
-      <publishTf>true</publishTf>
-      <publishWheelJointState>true</publishWheelJointState>
-      <legacyMode>false</legacyMode>
-      <updateRate>30</updateRate>
-      <leftJoint>wheel_left_joint</leftJoint>
-      <rightJoint>wheel_right_joint</rightJoint>
-      <wheelSeparation>0.287</wheelSeparation>
-      <wheelDiameter>0.066</wheelDiameter>
-      <wheelAcceleration>1</wheelAcceleration>
-      <wheelTorque>10</wheelTorque>
-      <rosDebugLevel>na</rosDebugLevel>
+    <plugin name="turtlebot3_diff_drive" filename="libgazebo_ros_diff_drive.so">
+
+      <ros>
+        <!-- <namespace>/tb3</namespace> -->
+      </ros>
+
+      <update_rate>30</update_rate>
+
+      <!-- wheels -->
+      <left_joint>wheel_left_joint</left_joint>
+      <right_joint>wheel_right_joint</right_joint>
+
+      <!-- kinematics -->
+      <wheel_separation>0.287</wheel_separation>
+      <wheel_diameter>0.066</wheel_diameter>
+
+      <!-- limits -->
+      <max_wheel_torque>20</max_wheel_torque>
+      <max_wheel_acceleration>1.0</max_wheel_acceleration>
+
+      <command_topic>cmd_vel</command_topic>
+
+      <!-- output -->
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>false</publish_wheel_tf>
+
+      <odometry_topic>odom</odometry_topic>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_footprint</robot_base_frame>
+
     </plugin>
   </gazebo>
 
   <gazebo>
-    <plugin name="turtlebot3_imu" filename="libgazebo_ros_imu_sensor.so">
-      <alwaysOn>true</alwaysOn>
-      <bodyName>imu_link</bodyName>
-      <frameName>imu_link</frameName>
-      <topicName>imu</topicName>
-      <serviceName>imu_service</serviceName>
-      <gaussianNoise>0.0</gaussianNoise>
-      <updateRate>200</updateRate>
-      <imu>
-        <noise>
-          <type>gaussian</type>
-          <rate>
-            <mean>0.0</mean>
-            <stddev>2e-4</stddev>
-            <bias_mean>0.0000075</bias_mean>
-            <bias_stddev>0.0000008</bias_stddev>
-          </rate>
-          <accel>
-            <mean>0.0</mean>
-            <stddev>1.7e-2</stddev>
-            <bias_mean>0.1</bias_mean>
-            <bias_stddev>0.001</bias_stddev>
-          </accel>
-        </noise>
-      </imu>
-    </plugin>
+    <sensor name="imu" type="imu">
+        <always_on>true</always_on>
+        <visualize>$(arg imu_visual)</visualize>
+        <update_rate>200</update_rate>
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+              </noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+        <plugin name="turtlebot3_imu" filename="libgazebo_ros_imu_sensor.so">
+          <ros>
+            <!-- <namespace>/tb3</namespace> -->
+            <argument>~/out:=imu</argument>
+          </ros>
+        </plugin>
+      </sensor>
   </gazebo>
 
   <gazebo reference="base_scan">
@@ -136,9 +175,13 @@
           <stddev>0.01</stddev>
         </noise>
       </ray>
-      <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_ray_sensor.so">
-        <topicName>scan</topicName>
-        <frameName>base_scan</frameName>
+      <plugin name="turtlebot3_laserscan" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <!-- <namespace>/tb3</namespace> -->
+          <argument>~/out:=scan</argument>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>base_scan</frame_name>
       </plugin>
     </sensor>
   </gazebo>
@@ -187,4 +230,15 @@
     </sensor>
   </gazebo>
 
+  <gazebo>
+    <plugin name="turtlebot3_joint_state" filename="libgazebo_ros_joint_state_publisher.so">
+      <ros>
+        <!-- <namespace>/tb3</namespace> -->
+        <argument>~/out:=joint_states</argument>
+      </ros>
+      <update_rate>30</update_rate>
+      <joint_name>wheel_left_joint</joint_name>
+      <joint_name>wheel_right_joint</joint_name>
+    </plugin>
+  </gazebo>
 </robot>
