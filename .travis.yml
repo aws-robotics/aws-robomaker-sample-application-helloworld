@@ -7,7 +7,7 @@ notifications:
     on_failure: always
     recipients:
     - ros-contributions@amazon.com
-    #- travis-build@platform-notifications.robomaker.aws.a2z.com Uncomment once the build passes
+    - travis-build@platform-notifications.robomaker.aws.a2z.com Uncomment once the build passes
 env:
   matrix:
   - ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="robot_ws"
