@@ -7,7 +7,7 @@ notifications:
     on_failure: always
     recipients:
     - ros-contributions@amazon.com
-    - travis-build@platform-notifications.robomaker.aws.a2z.com Uncomment once the build passes
+    - travis-build@platform-notifications.robomaker.aws.a2z.com
 env:
   matrix:
   - ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="robot_ws"
@@ -24,7 +24,7 @@ env:
 before_install:
 - pip install --user awscli
 install:
-- git clone -b test https://github.com/AAlon/travis-scripts.git .ros_ci
+- git clone https://github.com/aws-robotics/travis-scripts.git .ros_ci
 script:
 - . .ros_ci/add_tag.sh
 - while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
