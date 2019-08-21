@@ -13,22 +13,42 @@ env:
   - ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="robot_ws"
   - ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="simulation_ws"
   global:
-  - secure: C/FhHAN31Iuo7oN08KARzuwhcwX/lSVRFateahLoRbpj87Jf8Jvhj89+SfBrV96MUtAbTV6bxcaWrmzX/B1+mSyHJjRfNDRAVlCIhckmVp5KiB4rQ/VgonTItZgGERYKdyzo05mhIAMKUTleHjgEEAG3Onc7h0jjKnXA+OnRuI6TBUIkmRo5WXOsMXIgdjY+R81f4CSNwyNhrEb1zXCj4y1XpiGVnkhjhLFDRyNYg0BzRoDd1p/knV+3pJbv0RPLOGep6zd7BJZK0X7YSpqE3nR5Dr0COkf50ZLOjMezIU0kCIBk8Iqsj+dQdXrk7Hdn+l6/WyQucFrqUo37CrqHXiloCno59DxKuUPUlJn3kOEmQpW0X1ApF9wxPXRIfrS12KGjSduHjG0bL10Bo3ByGQgZAJvJVUiNWwgtL7ZZZFwF0RHatGe16HBwSBGcGNKq+H1ZKGs0imiSI/J7+/XuFbnXrwaconvYF6OoOJ+xQDjqE+j6iWBuWbtIlZLcjy+B4Q9JZpuYkyc5ILATl/pJRh+RTa3V6om2StoLLU8jb8ydzH0Na3HlfdSwFY1QyPMneSSFHENqHHoEcAIebWpjgs5QKfbTFbDPUewKQnHtyV2Ch4LSStI7XWOcQ3BDiNcBj2/GYwJROBtvmyhixnEFe2Lhnz9D04iUgFStzpeUETo=
-  - secure: WFS31qAf1Lc4FlMcxkksWpbJWzbPATHtkqXB7bH3ggW+rrKki64ak8JhnZkGOg2ooPiYxXao8jvp+QA9I/pPAJ7U+inNp9ipWZwTpPKoSW4nJiX33aY5rWocheyq+tSN2qEFhSKvlv7j3cFX2FTC/aWD92n3o9xtc4vXQUK/ITDfpUs1h+nTK5Qkv0VV32i0Ulr/3j5KZt+WamViRaC6ELptu79I0mj6+IT6ImoayuJaJ/ti5rds93/I3YU3e9NYIquPhqUEoDXGzj1IKZ8QHUBZTpiY59bmw0UIzcucqXuxUGevmYn9vscb0xjunV0KS4GCD/o9M/1DXFmgVU7wmuw37hfg7YIuW/2jkpqwoMZH0E310ZrK5ddvpgF9AtysL2ezW34Yyxh4NY8op8ctL3VOyxbYwq0xK7I/ycHMogqO4qD0tkMh47tKX48Y0bWOyIoZmBKWbnYoGzrfgAi6g29NxAhZQB2VdPb6fuu4KAHFoHPRUvQF2i76mpWeS7DJNSOjJ8irUh6c+t4958ScV85CifQQxTsOmABnEe2r6JU0rWiJJwuwqsEw0wSAFUYV2xKw1vqg2dFAnzHczbAYgjvVkuGFqke2MEvq/anCD6yl/GVTEeclWCR0P25mgc1EUZg+4DATEfEx9FhDUxoHLQcElZqpfKZjRlD/e2+svA4=
   - SA_NAME=hello-world
   - SA_PACKAGE_NAME=hello_world_robot
   - NO_TEST=true
   - GH_USER_NAME="travis-ci"
   - GH_USER_EMAIL="travis@travis-ci.org"
   - AWS_DEFAULT_REGION=us-west-2
+  - secure: tibBlNU4AJ/W25sxznoSP74osucZiqD13Yml4Q7RWTRPuf1dXcV95JCocHn+3uKhYxA0ChBNap8FuQf8AmyEEXLoKDPFCL8JLpSX7JY+10/m6Q1peqLgTqqXY03J01d7dct3EYjZ3fRCin2jWYdaL79H9S2uGXmo+b8d5ZwBM8ZRs7xysaGAzp/nOnTlGAjy2xZe2O+/uPeTr4jxN3s6bsp1ef40QazykpI1VNE695Fqdz++aU/OzQP4kqJBsg5FypPvZWq4L4PMujz4GkBk3sF/oZlOuHfGqbRqm57QsEOWZf87I+bEw1XPB2OfCYC3BDPL1thp/mqwCcPx1l66oS6rS7M2FEfW+XwH9Fsr/9+HeVrpyymRJdZvYVYmB/Sapbwp0ZLffxrtbG2hgDXYv2YOkId4XbgjNBEeZY1yNT7WvUZZnhdBTHSj1oyK/SyokY8y612OroZvXOVxU488DEomvrZn9us4wx4S7jlJsKhGru/vqTtgulxXbaCYgTBbRqT84SnQbWrT7NowuhTohxUlfyDVhgeu+H+5e4KiPODswBDkV7KWnUKQF1TN2VQ4k172w67o4p3+ZJDZs3Pj6ObVSqjATtXsZsfP9he5HDHUHfz6KndDSb470BBPYLmCuN4EqjVJtnblKEMp1ruTRsGtoFUpOSttx3UDoYRLuc0=
+  - secure: xUcSlF5u2XsnxdGmxUGqcbm38HzacWgX7sgmD8/BvxmG0AIt9gvNDNmO7BDewQnepjxo8ieM3mO0veGuNCBGOBOJ0eTSryEq03awEFfu9aL2fjoQRvD0/PSLOIIE/jsDb2EsNwHhCA3nI7XznntZThatR15C3NEdKurv/3uMZoOI+ISFQgmXTEz+evQLoBYSwWIEGNpDG+8NDAou9iHipSwwgG1lZqi1IS3fdi3S9BzuTYb5//qYGBDPJp6ui5OxLMoqT3XeiO+8I1V9oAlO/ygqw+CvAGpg+Uemw0PGTiaRf6C4gbdS/TP3WkAcTCNOboAlN8mgj1ZwfwkGWs2HZJumoGTIsPRkzharhT6kMdiEwpQzylXBYuXlzPlLyaZolzZXdqI2ZbwTlqOGmHNzQgKW+wJb4VMg21auBOsJdXwkYlj/J6/J9673l1AjKCU5OwvCCiZ1sDF4om4Wgn7nRbEdjm+6Xh25mYEGbQFnPztdzQwFCFxobqwVLGzv7NrfNVxJ9ESHqoLcVzDwbs1NjDQ55jK9ccsmHc+cDA+/rgkKvPb5UyRX7L0f5sF+65LcFoAxkZQd4uAUl06w2FhomY6yOkeY53AJfLah6FMczbdqXJJU6WParG5u/PrW6jvohVGZJkTaEHswarmVOMMIPWemTtFvkfy6+eserkIdP/4=
+  #- secure: FHdiFoyZQpOSRD5Ex7E5coZyyKeTPXg0FL2hKwJYszBs2EgMggtI6sX2YhawExOdTQuqLb/WHXqNhna4RlFMLU/EkCjk9tdpd+ni54hUY/jIZTxT+bGMgvRyR4WeuHJfDtpSt9yFL6F7TEX9QhFJ6Q597N4/OurwU/Tb/sdPldWp+y4RkdH7TSr/Q82v9HbW03h0RzgS/5Lhtn4Zvj+qUDijwcC37kAM3RoJrH37KYuftkBo1bsuvYPpouC5CwFCrEJMP3FLB5Av0UJjreb3hR6F6j035X8ZpJuuS1T/w5fHOwsVmpCcT5SMeyEV0emyFkj3oikDO3Aun/Gm8YpTZ7Xvo8vkdUHlujNT6xchkwYLOI2WEwOOsIb1+KIU18Kcs8YZR4/VprbRvuTsY7oxMDnXCBHwz1YKUULrsQ9B/gPPngbsU7AB4uwEtMzGl2XvYr+WScuYEl5JZhxinZZSdqNevlikOV+TeAyctVYONuhOnunmQZjNUR5bxpwnfvqXrUSVOcSajf/4MHTSKUXM9YuC3zNVXed9dxC7xk81W21zzi6Pq6GIVwhshF7QTwaDSkbH9PwBB84han7ORaOkzdZCcxLWiFc9aYHEiXVLEZ5RqPIxCdlcWGe2uweG98j8MtkeqjxJGiH2WJyBez6UG15QDHe0aFZQT6+v3LeIMj4=
+  #- secure: RK0zUvbfpiUYjaOhm9J9mp6hThHKeHE5owwRiAFXeVbPo6ewkzNkPS8ZcssX6l4h6uXOfGb3X1Xbl13rKJDtq0wPsYewi5UjDoAYq8oRsE9GCrqn+EQv6RxgSrO1MKZWBsDOJ8qpbLKPKJm3KFxtzo+9URGYNJmIeHsB19m6Y/YWYgMr9+WLSe1cQcMbywoBsW9Kr81XBAYA32LG0RWkDl5NW3vNmXrsMPI1o1pfRYfs0P0UwCtD6z29Ea9wVRqwdKAivFApfKrZftcVRo63JR5ymSbH1IQkoUv4jRlSYRx4eEMxDfySAZVfxkpCOwN55t7YYlqTtTIjlttMuiENXoyCtK8zR7q56mRShPtUSIsWt3dUzDHm1dIrGsei4cEebPymq5aWRDPAFzkUdj6cnoczfV21odHkyH5ryOYyVkbtRcfFvmj9EFIxPjUJOdq7CSLpk1lKMJYW6b6wwE9dU9tFUGX8OcaDevOJQHsDadRikkVB2NcY94/zP9uxkjgFePK4HtnNt56cJ2tKCvPYTVgj1IzTO8ZOy9y5C3IieGHCTK3b1a8LIp9eais9yxnVE66Gqu0ka4SD3AMzBJrdUERjLDfp9LtX5E/x8dz8+gQEI26QBMHAs7Wncz97dlGHXNw6zjZW9IOXrhld8wML+Tzrozcg8KJW00D8bQqlKHU=
 before_install:
 - pip install --user awscli
 install:
 - git clone https://github.com/aws-robotics/travis-scripts.git .ros_ci
 script:
-- . .ros_ci/add_tag.sh
+- ". .ros_ci/add_tag.sh"
 - while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
-- .ros_ci/ce_build.sh
+- ".ros_ci/ce_build.sh"
 - kill %1
 before_deploy:
-- . .ros_ci/before_deploy.sh
+- ". .ros_ci/before_deploy.sh"
+deploy:
+  - provider: s3
+    access_key_id: "$AWS_ACCESS_KEY_ID"
+    secret_access_key: "$AWS_SECRET_ACCESS_KEY"
+    bucket: "$S3_BUCKET_NAME"
+    region: "us-west-2"
+    local_dir: shared
+    skip_cleanup: true
+    wait-until-deployed: true
+    on:
+      branch: ros2
+    upload-dir: travis/${SA_NAME}/${ROS_DISTRO}/gazebo${GAZEBO_VERSION}
+  - provider: script
+    script: bash .ros_ci/codepipeline_deploy.sh
+    on:
+      branch: ros2
+after_deploy:
+- .ros_ci/post_deploy.sh
