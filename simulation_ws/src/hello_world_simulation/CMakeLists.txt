@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project(hello_world_simulation)
 
-find_package(ament_cmake_ros REQUIRED)
+find_package(ament_cmake REQUIRED)
 find_package(turtlebot3_description REQUIRED)
 
 install(DIRECTORY launch worlds
