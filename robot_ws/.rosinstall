@@ -1,6 +1,3 @@
 # Amazon ROS HelloWorld package dependencies
 - git: {local-name: src/deps/turtlebot3, uri: 'https://github.com/ROBOTIS-GIT/turtlebot3.git', version: ros2}
-- git: {local-name: src/deps/turtlebot3_msgs, uri: 'https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git', version: ros2}
 - git: {local-name: src/deps/cartographer/cartographer_ros, uri: 'https://github.com/ROBOTIS-GIT/cartographer_ros.git', version: dashing}
-- git: {local-name: src/deps/DynamixelSDK, uri: 'https://github.com/ROBOTIS-GIT/DynamixelSDK.git', version: ros2}
-- git: {local-name: src/deps/hls_lfcd_lds_driver, uri: 'https://github.com/ROBOTIS-GIT/hls_lfcd_lds_driver.git', version: ros2}
