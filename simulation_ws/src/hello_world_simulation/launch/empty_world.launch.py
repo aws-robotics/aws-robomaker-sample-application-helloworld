@@ -28,6 +28,7 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='True')
+    env = {'GAZEBO_MODEL_PATH': os.path.split(get_package_share_directory('turtlebot3_description_reduced_mesh'))[0]}
     empty_world_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             get_package_share_directory('gazebo_ros') + '/launch/empty_world.launch.py'))
@@ -44,6 +45,7 @@ def generate_launch_description():
             output='screen'),
         ExecuteProcess(
             cmd=['gzserver', '--verbose', '-s', 'libgazebo_ros_factory.so'],
+            additional_env=env,
             output='screen'
         ),
         IncludeLaunchDescription(
