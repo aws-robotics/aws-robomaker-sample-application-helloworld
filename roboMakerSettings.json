@@ -42,12 +42,12 @@
           "sourceBundleFile": "./HelloWorld/robot_ws/bundle/output.tar",
           "architecture": "X86_64",
           "robotSoftwareSuite": {
-            "version": "Kinetic",
-            "name": "ROS"
+            "version": "<capitalised name of ROS distribution, e.g. Dashing>",
+            "name": "ROS2"
           },
           "launchConfig": {
             "packageName": "hello_world_robot",
-            "launchFile": "rotate.launch"
+            "launchFile": "rotate.launch.py"
           }
         },
         "simulationApp": {
@@ -57,15 +57,15 @@
           "architecture": "X86_64",
           "launchConfig": {
             "packageName": "hello_world_simulation",
-            "launchFile": "empty_world.launch"
+            "launchFile": "empty_world.launch.py"
           },
           "robotSoftwareSuite": {
-            "version": "Kinetic",
-            "name": "ROS"
+            "version": "<capitalised name of ROS distribution, e.g. Dashing>",
+            "name": "ROS2"
           },
           "simulationSoftwareSuite": {
             "name": "Gazebo",
-            "version": "7"
+            "version": "<gazebo version number, e.g. 9>"
           },
           "renderingEngine": {
             "name": "OGRE",
