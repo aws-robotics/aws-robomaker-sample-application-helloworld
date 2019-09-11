@@ -19,38 +19,60 @@
 import os
 
 from ament_index_python.packages import get_package_share_directory
-from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
-from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.actions import ExecuteProcess
-from launch.substitutions import LaunchConfiguration
-
+import launch
 
 def generate_launch_description():
-    use_sim_time = LaunchConfiguration('use_sim_time', default='True')
-    env = {'GAZEBO_MODEL_PATH': os.path.split(get_package_share_directory('turtlebot3_description_reduced_mesh'))[0]}
-    empty_world_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            get_package_share_directory('gazebo_ros') + '/launch/empty_world.launch.py'))
-    launch_file_dir = os.path.join(get_package_share_directory('turtlebot3_bringup'), 'launch')
-    turtlebot3_description_reduced_mesh_dir = get_package_share_directory('turtlebot3_description_reduced_mesh')
+    use_sim_time = launch.substitutions.LaunchConfiguration('use_sim_time', default='false')
+    hello_world = get_package_share_directory('hello_world_simulation')
+    gazebo_ros = get_package_share_directory('gazebo_ros')
 
-    turtlebot3_description_reduced_mesh_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            turtlebot3_description_reduced_mesh_dir + '/launch/spawn_turtlebot.launch.py'))
+    gazebo_client = launch.actions.IncludeLaunchDescription(
+	launch.launch_description_sources.PythonLaunchDescriptionSource(
+            os.path.join(gazebo_ros, 'launch', 'gzclient.launch.py')),
+        condition=launch.conditions.IfCondition(launch.substitutions.LaunchConfiguration('gui'))
+     )
+    gazebo_server = launch.actions.IncludeLaunchDescription(
+        launch.launch_description_sources.PythonLaunchDescriptionSource(
+            os.path.join(gazebo_ros, 'launch', 'gzserver.launch.py'))
+    )
 
-    return LaunchDescription([       
-        ExecuteProcess(
-            cmd=['ros2', 'param', 'set', '/gazebo', 'use_sim_time', use_sim_time],
-            output='screen'),
-        ExecuteProcess(
-            cmd=['gzserver', '--verbose', '-s', 'libgazebo_ros_factory.so'],
-            additional_env=env,
-            output='screen'
+    turtlebot3_description_reduced_mesh = get_package_share_directory('turtlebot3_description_reduced_mesh')
+    turtlebot3_description_reduced_mesh_launch = launch.actions.IncludeLaunchDescription(
+        launch.launch_description_sources.PythonLaunchDescriptionSource(
+            os.path.join(turtlebot3_description_reduced_mesh, 'launch', 'spawn_turtlebot.launch.py'))
+    )
+
+    turtlebot3_bringup = get_package_share_directory('turtlebot3_bringup')
+    turtlebot3_state_publisher_launch = launch.actions.IncludeLaunchDescription(
+        launch.launch_description_sources.PythonLaunchDescriptionSource(
+            os.path.join(turtlebot3_bringup, 'launch', 'turtlebot3_state_publisher.launch.py')
         ),
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([launch_file_dir, '/turtlebot3_state_publisher.launch.py']),
-            launch_arguments={'use_sim_time': use_sim_time}.items(),
+        launch_arguments={'use_sim_time': use_sim_time}.items()
+    )
+
+    return launch.LaunchDescription([
+        launch.actions.DeclareLaunchArgument(
+          'world',
+          default_value=[os.path.join(hello_world, 'worlds', 'empty.world'), ''],
+          description='SDF world file'),
+        launch.actions.DeclareLaunchArgument(
+            name='model',
+            default_value=launch.substitutions.EnvironmentVariable(
+                'TURTLEBOT3_MODEL'),
+            description='model type [burger, waffle, waffle_pi]'
         ),
-        turtlebot3_description_reduced_mesh_launch
+        launch.actions.DeclareLaunchArgument(
+            name='gui',
+            default_value='false'
+        ),
+        launch.actions.DeclareLaunchArgument(
+            name='use_sim_time',
+            default_value='false'
+        ),
+        gazebo_server,
+        gazebo_client,
+        turtlebot3_description_reduced_mesh_launch,
+        turtlebot3_state_publisher_launch
     ])
+
+

@@ -1,4 +1,1 @@
-- git: {local-name: src/deps/turtlebot3_simulations, uri: "https://github.com/ROBOTIS-GIT/turtlebot3_simulations", version: ros2}
 - git: {local-name: src/deps/xacro, uri: "https://github.com/AAlon/xacro", version: ros2-find}
-- git: {local-name: src/deps/turtlebot3, uri: 'https://github.com/ROBOTIS-GIT/turtlebot3.git', version: ros2}
-- git: {local-name: src/deps/cartographer/cartographer_ros, uri: 'https://github.com/ROBOTIS-GIT/cartographer_ros.git', version: dashing}
