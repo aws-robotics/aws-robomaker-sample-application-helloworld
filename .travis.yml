@@ -46,9 +46,15 @@ deploy:
     on:
       branch: ros2
     upload-dir: travis/${SA_NAME}/${ROS_DISTRO}/gazebo${GAZEBO_VERSION}
-  - provider: script
-    script: bash .ros_ci/codepipeline_deploy.sh
-    on:
-      branch: ros2
+jobs:
+  include:
+    - stage: Deploy
+      script: ". .ros_ci/add_tag.sh"
+      env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9
+      deploy:
+        - provider: script
+          script: bash .ros_ci/codepipeline_deploy.sh
+          on:
+            branch: ros2
 after_deploy:
 - .ros_ci/post_deploy.sh
