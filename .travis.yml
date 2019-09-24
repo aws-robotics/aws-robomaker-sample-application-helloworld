@@ -9,9 +9,6 @@ notifications:
     - ros-contributions@amazon.com
     - travis-build@platform-notifications.robomaker.aws.a2z.com
 env:
-  matrix:
-  - ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="robot_ws"
-  - ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="simulation_ws"
   global:
   - SA_NAME=hello-world
   - SA_PACKAGE_NAME=hello_world_robot
@@ -49,7 +46,9 @@ deploy:
 jobs:
   include:
     - stage: Build & Bundle
+      env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="robot_ws"
     - stage: Build & Bundle
+      env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="simulation_ws"
     - stage: Deploy
       script: ". .ros_ci/add_tag.sh"
       env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9
