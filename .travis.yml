@@ -48,6 +48,7 @@ deploy:
     upload-dir: travis/${SA_NAME}/${ROS_DISTRO}/gazebo${GAZEBO_VERSION}
 jobs:
   include:
+    - stage: Build & Bundle
     - stage: Deploy
       script: ". .ros_ci/add_tag.sh"
       env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9
