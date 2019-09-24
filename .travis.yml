@@ -49,6 +49,7 @@ deploy:
 jobs:
   include:
     - stage: Build & Bundle
+    - stage: Build & Bundle
     - stage: Deploy
       script: ". .ros_ci/add_tag.sh"
       env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9
