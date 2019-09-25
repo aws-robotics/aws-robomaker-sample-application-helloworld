@@ -1,3 +1,1 @@
-# Amazon ROS HelloWorld package dependencies
-- git: {local-name: src/deps/turtlebot3, uri: 'https://github.com/ROBOTIS-GIT/turtlebot3.git', version: ros2}
-- git: {local-name: src/deps/cartographer/cartographer_ros, uri: 'https://github.com/ROBOTIS-GIT/cartographer_ros.git', version: dashing}
+
