@@ -1,12 +1,12 @@
 # AWS RoboMaker Sample Application - Hello World
 
-This demonstrates the structure of a ROS project that works with RoboMaker by creating a robot spinning in an empty world.
+This demonstrates the structure of a ROS2 project that works with RoboMaker by creating a robot spinning in an empty world.
 
 _RoboMaker sample applications include third-party software licensed under open-source licenses and is provided for demonstration purposes only. Incorporation or use of RoboMaker sample applications in connection with your production workloads or a commercial products or devices may affect your legal rights or obligations under the applicable open-source licenses. Source code information can be found [here](https://s3.console.aws.amazon.com/s3/buckets/robomaker-applications-us-east-1-72fc243f9355/hello-world/?region=us-east-1)._
 
 ## Requirements
 
-- [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu) / [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu) - Other versions may work, however they have not been tested
+- [ROS2 Dashing](https://index.ros.org//doc/ros2/Installation/Dashing) - Other versions may work, however they have not been tested
 - [Colcon](https://colcon.readthedocs.io/en/released/user/installation.html) - Used for building and bundling the application. 
 
 ## Build
@@ -43,19 +43,19 @@ Launch the application with the following commands:
 - *Running Robot Application on a Robot*
     ```bash
     source robot_ws/install/local_setup.sh
-    roslaunch hello_world_robot deploy_rotate.launch
+    ros2 launch hello_world_robot deploy_rotate.launch.py
     ```
 
 - *Running Robot Application Elsewhere*
     ```bash
     source robot_ws/install/local_setup.sh
-    roslaunch hello_world_robot rotate.launch
+    ros2 launch hello_world_robot rotate.launch.py
     ```
 
 - *Running Simulation Application*
     ```bash
     source simulation_ws/install/local_setup.sh
-    roslaunch hello_world_simulation empty_world.launch
+    roslaunch hello_world_simulation empty_world.launch.py
     ```
 
 ## Using this sample with RoboMaker
