@@ -52,6 +52,7 @@ jobs:
     - stage: Deploy
       script: ". .ros_ci/add_tag.sh"
       env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9
+      before_deploy: "export APP_MANIFEST_REPO=AppManifest-${SA_NAME}-${ROS_DISTRO}-gazebo${GAZEBO_VERSION}"
       deploy:
         - provider: script
           script: bash .ros_ci/codepipeline_deploy.sh
