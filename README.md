@@ -55,7 +55,7 @@ Launch the application with the following commands:
 - *Running Simulation Application*
     ```bash
     source simulation_ws/install/local_setup.sh
-    roslaunch hello_world_simulation empty_world.launch.py
+    ros2 launch hello_world_simulation empty_world.launch.py
     ```
 
 ## Using this sample with RoboMaker
