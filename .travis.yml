@@ -46,9 +46,9 @@ deploy:
 jobs:
   include:
     - stage: Build & Bundle
-      env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="robot_ws"
+      env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="robot_ws" UPLOAD_SOURCES="robot_ws simulation_ws LICENSE* NOTICE* README* roboMakerSettings.json"
     - stage: Build & Bundle
-      env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="simulation_ws"
+      env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="simulation_ws" UPLOAD_SOURCES="false"
     - stage: Deploy
       script: ". .ros_ci/add_tag.sh"
       env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9
