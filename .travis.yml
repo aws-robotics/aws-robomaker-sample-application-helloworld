@@ -23,7 +23,7 @@ env:
 before_install:
 - pip install --user awscli
 install:
-- git clone https://github.com/aws-robotics/travis-scripts.git .ros_ci
+- git clone -b source-upload-override https://github.com/aws-robotics/travis-scripts.git .ros_ci
 script:
 - . .ros_ci/add_tag.sh && set +e
 - while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
@@ -46,11 +46,14 @@ deploy:
 jobs:
   include:
     - stage: Build & Bundle
-      env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="robot_ws" UPLOAD_SOURCES="robot_ws simulation_ws LICENSE* NOTICE* README* roboMakerSettings.json"
+      env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="robot_ws" UPLOAD_SOURCES="false"
     - stage: Build & Bundle
       env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="simulation_ws" UPLOAD_SOURCES="false"
+    - stage: Upload sources
+      script: . .ros_ci/add_tag.sh && .ros_ci/prepare_sources_to_upload.sh && set +e
+      env: ROS_VERSION=2 WORKSPACES="robot_ws simulation_ws"
     - stage: Deploy
-      script: ". .ros_ci/add_tag.sh"
+      script: . .ros_ci/add_tag.sh && set +e
       env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9
       before_deploy: "export APP_MANIFEST_REPO=AppManifest-${SA_NAME}-${ROS_DISTRO}-gazebo${GAZEBO_VERSION}"
       deploy:
