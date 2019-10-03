@@ -23,7 +23,7 @@ env:
 before_install:
 - pip install --user awscli
 install:
-- git clone -b source-upload-override https://github.com/aws-robotics/travis-scripts.git .ros_ci
+- git clone https://github.com/aws-robotics/travis-scripts.git .ros_ci
 script:
 - . .ros_ci/add_tag.sh && set +e
 - while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
