@@ -12,6 +12,9 @@ env:
   global:
   - SA_NAME=hello-world
   - SA_PACKAGE_NAME=hello_world_robot
+  - ROS_DISTRO=dashing
+  - ROS_VERSION=2
+  - GAZEBO_VERSION=9
   - NO_TEST=true
   - GH_USER_NAME="travis-ci"
   - GH_USER_EMAIL="travis@travis-ci.org"
@@ -46,15 +49,14 @@ deploy:
 jobs:
   include:
     - stage: Build & Bundle
-      env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="robot_ws" UPLOAD_SOURCES="false"
+      env: WORKSPACES="robot_ws" UPLOAD_SOURCES="false"
     - stage: Build & Bundle
-      env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9 WORKSPACES="simulation_ws" UPLOAD_SOURCES="false"
+      env: WORKSPACES="simulation_ws" UPLOAD_SOURCES="false"
     - stage: Upload sources
       script: . .ros_ci/add_tag.sh && .ros_ci/prepare_sources_to_upload.sh && set +e
-      env: ROS_VERSION=2 WORKSPACES="robot_ws simulation_ws"
+      env: WORKSPACES="robot_ws simulation_ws"
     - stage: Deploy
       script: . .ros_ci/add_tag.sh && set +e
-      env: ROS_DISTRO=dashing ROS_VERSION=2 GAZEBO_VERSION=9
       before_deploy: "export APP_MANIFEST_REPO=AppManifest-${SA_NAME}-${ROS_DISTRO}-gazebo${GAZEBO_VERSION}"
       deploy:
         - provider: script
