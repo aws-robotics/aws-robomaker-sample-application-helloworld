@@ -1,1 +1,1 @@
-- git: {local-name: src/deps/xacro, uri: "https://github.com/AAlon/xacro", version: ros2-find}
+- git: {local-name: src/deps/turtlebot3-description-reduced-mesh, uri: "https://github.com/aws-robotics/turtlebot3-description-reduced-mesh.git", version: "ros2"}
