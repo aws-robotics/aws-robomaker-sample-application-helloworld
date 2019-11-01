@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+
+import rospy
+import boto3
+import time
+import os
+
+from rosgraph_msgs.msg import Clock
+
+client = boto3.client('robomaker')
+ts = time.time()
+test_name = "Hello_World_Tests_" + ts
+def cancel_job():
+    print("Done")
+    set_tag(name=test_name, value="Time_Elapsed_End")
+    set_tag(name=test_name, value="Time_Elapsed_Status_Passed")
+    client.cancel_simulation_job(
+        job=os.environ['AWS_ROBOMAKER_SIMULATION_JOB_ARN']
+    )
+    return 0
+
+def set_tag(name, value):
+    print("Tag: ", name + ", " + value)
+    client.tag_resource(
+        resourceArn=os.environ['AWS_ROBOMAKER_SIMULATION_JOB_ARN'],
+        tags={
+            name: value
+        }
+    )
+    return 0
+
+def check_complete(msg):
+    print("Testing")
+    if msg.clock.secs > 10.0:
+        print("Test pass")
+        set_tag(name="status", value="pass")
+        cancel_job()
+
+def run_test():
+    rospy.init_node('run_test')
+    set_tag(name=test_name, value="Time_Elapsed_Start")
+    clock = rospy.Subscriber('/clock', Clock, check_complete)
+    rospy.spin()
+
+if __name__ == "__main__":
+    run_test()            

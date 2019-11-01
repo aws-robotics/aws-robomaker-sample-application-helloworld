@@ -1,0 +1,16 @@
+<launch>
+  <!-- 
+       Using simulation time means nodes initialized after this
+       will not use the system clock for its ROS clock and 
+       instead wait for simulation ticks. 
+
+       See http://wiki.ros.org/Clock
+
+       Note: set to false for deploying to a real robot.
+  -->
+  <arg name="use_sim_time" default="true"/>
+  <param name="use_sim_time" value="$(arg use_sim_time)"/>
+
+  <!-- Rotate the robot on launch -->
+  <node pkg="test_node" type="run_test" name="run_test" output="screen"/>
+</launch>

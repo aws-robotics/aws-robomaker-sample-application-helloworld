@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>test_node</name>
+  <version>1.2.0</version>
+  <description>
+    AWS RoboMaker hello_world_robot test node
+  </description>
+  <license>MIT</license>
+  <author email="ros-contributions@amazon.com">AWS RoboMaker</author>
+  <maintainer email="ros-contributions@amazon.com">AWS RoboMaker</maintainer>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>rosgraph_msgs</depend>
+  <depend>aws_robomaker_simulation_ros_pkgs</depend>
+</package>

@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+
+import rospy
+import time
+import os
+
+from rosgraph_msgs.msg import Clock
+from robomaker_simulation_msgs.msg import Tag
+from robomaker_simulation_msgs.srv import Cancel, AddTags
+
+ts = time.time()
+test_name = "Hello_World_Tests_" + str(ts).split(".", 1)[0]
+is_cancelled = False
+is_completed = False
+
+def cancel_job():
+    
+    set_tag(name=test_name + "_Time_Elapsed_End", value=str(time.time()).split(".", 1)[0])
+    
+    # proxy for simulation job cancel 
+    rospy.wait_for_service('/robomaker/job/cancel')
+    requestCancel = rospy.ServiceProxy('/robomaker/job/cancel', Cancel)
+    response = requestCancel()
+    if response.success:
+        global is_cancelled
+        is_cancelled = True
+        rospy.loginfo("Successfully requested cancel job")
+    else:
+        rospy.logerr("Cancel request failed: %s", response.message)
+
+def set_tag(name, value):
+    print("Name: ", name)
+    print("Value: ", value)
+    rospy.wait_for_service('/robomaker/job/add_tags')
+    requestAddTags = rospy.ServiceProxy('/robomaker/job/add_tags', AddTags)
+    tags = ([Tag(key=name, value=value)])
+    response = requestAddTags(tags)
+    if response.success:
+        rospy.loginfo("Successfully added tags: %s", tags)
+    else:
+        rospy.logerr("Add tags request failed for tags (%s): %s", tags, response.message)
+
+
+def check_complete(msg):
+    if msg.clock.secs > 60.0 and is_completed == False:
+        is_completed == True
+        print("Test pass")
+        set_tag(name=test_name + "_Time_Elapsed_Status", value="Passed")
+        # set_tag(name="Status", value="Pass")
+        cancel_job()
+
+def run_test():
+    rospy.init_node('run_test')
+    set_tag(name=test_name + "_Time_Elapsed_Start", value= str(time.time()).split(".", 1)[0])
+    clock = rospy.Subscriber('/clock', Clock, check_complete)
+    rospy.spin()
+
+if __name__ == "__main__":
+    run_test()            
