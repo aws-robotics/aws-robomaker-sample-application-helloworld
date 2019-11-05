@@ -1,0 +1,35 @@
+version: 0.2 
+env:
+  variables:
+    S3_BUCKET: hello-world-pipeline
+    APP_NAME: hello-world
+    ROBOT_WS: ./robot_ws
+    SIMULATION_WS: ./simulation_ws
+    ROS_VERSION: melodic
+phases: 
+  install: 
+    commands: 
+       - apt-get update
+       - apt-get install -y python3-pip python3-apt apt-transport-https ca-certificates wget
+       - wget http://packages.osrfoundation.org/gazebo.key 
+       - apt-key add gazebo.key
+       - echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list
+       - apt-get update
+       - pip3 install -U setuptools pip
+       - pip3 install colcon-ros-bundle
+       - pip3 install awscli
+  pre_build:
+    commands:
+      - . /opt/ros/$ROS_VERSION/setup.sh
+      - rosdep install --from-paths $ROBOT_WS/src --ignore-src -r -y
+      - rosdep install --from-paths $SIMULATION_WS/src --ignore-src -r -y
+  build: 
+    commands: 
+      - COLCON_LOG_PATH="$ROBOT_WS/logs" colcon build --base-paths "$ROBOT_WS" --build-base "$ROBOT_WS/build" --install-base "$ROBOT_WS/install"
+      - COLCON_LOG_PATH="$SIMULATION_WS/logs" colcon build --base-paths "$SIMULATION_WS" --build-base "$SIMULATION_WS/build" --install-base "$SIMULATION_WS/install"
+  post_build: 
+    commands: 
+      - COLCON_LOG_PATH="$ROBOT_WS/logs" colcon bundle --base-paths "$ROBOT_WS" --build-base "$ROBOT_WS/build" --install-base "$ROBOT_WS/install" --bundle-base "$ROBOT_WS/bundle"
+      - COLCON_LOG_PATH="$SIMULATION_WS/logs" colcon bundle --base-paths "$SIMULATION_WS" --build-base "$SIMULATION_WS/build" --install-base "$SIMULATION_WS/install" --bundle-base "$SIMULATION_WS/bundle"
+      - aws s3 cp $ROBOT_WS/bundle/output.tar s3://$S3_BUCKET/bundles/$APP_NAME/x86/robotApp.tar 
+      - aws s3 cp $SIMULATION_WS/bundle/output.tar s3://$S3_BUCKET/bundles/x86/$APP_NAME/simulationApp.tar
