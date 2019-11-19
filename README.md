@@ -104,7 +104,7 @@ and [create a simulation job](https://docs.aws.amazon.com/robomaker/latest/dg/cr
 
 ## License
 
-MIT-0 - See LICENSE.txt for further information
+MIT-0 - See LICENSE for further information
 
 ## How to Contribute
 
