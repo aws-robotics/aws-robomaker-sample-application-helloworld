@@ -10,6 +10,8 @@ _RoboMaker sample applications include third-party software licensed under open-
 - [Colcon](https://colcon.readthedocs.io/en/released/user/installation.html) - Used for building and bundling the application.
 
 ## Build
+### Install requirements
+Follow links above for instructions on installing required software.
 
 ### Pre-build commands
 
