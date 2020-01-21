@@ -11,6 +11,9 @@ _RoboMaker sample applications include third-party software licensed under open-
 
 ## Build
 
+### Install requirements
+Follow links above for instructions on installing required software.
+
 ### Pre-build commands
 
 ```bash
