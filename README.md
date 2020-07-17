@@ -60,6 +60,36 @@ Launch the application with the following commands:
     roslaunch hello_world_simulation empty_world.launch
     ```
 
+## Run with a WorldForge world
+
+After exporting a world from [WorldForge](url_for_world_forge), we can unzip the content and move under simulation_ws package:
+
+```bash
+unzip exported_world.zip
+mv ros_ws/src/aws_robomaker_worldforge_* simulation_ws/src/
+```
+
+Build it again
+
+```bash
+cd simulation_ws
+colcon build
+```
+
+To specify the world for simulation, we can either
+- Run the following command
+```bash
+export WORID_ID=<your-world-name> (which is the name of your exported .zip file from WorldForge)
+```
+- Run application with `worldID:=<your-world-name>`
+
+Launch the application with the following commands:
+
+```bash
+source simulation_ws/install/local_setup.sh
+roslaunch hello_world_simulation WF_world.launch
+```
+
 ## Using this sample with RoboMaker
 
 You first need to install colcon-ros-bundle. Python 3.5 or above is required.
