@@ -76,18 +76,11 @@ cd simulation_ws
 colcon build
 ```
 
-To specify the world for simulation, we can either
-- Run the following command
-```bash
-export WORID_ID=<your-world-name> (which is the name of your exported .zip file from WorldForge)
-```
-- Run application with `worldID:=<your-world-name>`
-
 Launch the application with the following commands:
 
 ```bash
 source simulation_ws/install/local_setup.sh
-roslaunch hello_world_simulation WF_world.launch
+roslaunch hello_world_simulation worldforge_world.launch
 ```
 
 ## Using this sample with RoboMaker

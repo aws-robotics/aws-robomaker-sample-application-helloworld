@@ -1,0 +1,18 @@
+<launch>
+  <!-- Always set GUI to false for AWS RoboMaker Simulation
+       Use gui:=true on roslaunch command-line to run with a gui.
+  -->
+  <arg name="gui" default="false"/>
+
+  <include file="$(find aws_robomaker_worldforge_worlds)/launch/launch_world.launch">
+    <arg name="gui" default="$(arg gui)"/>
+  </include>
+
+  <!-- Spawn Robot -->
+  <include file="$(find turtlebot3_description_reduced_mesh)/launch/spawn_turtlebot.launch">
+    <!-- Override arg parameters here e.g,
+          <arg name="x_pos" default="10.0"/>
+          <arg name="y_pos" default="5.0"/>
+     -->
+  </include>
+</launch>
