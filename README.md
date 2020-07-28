@@ -66,7 +66,7 @@ After exporting a world from [WorldForge](url_for_world_forge), we can unzip the
 
 ```bash
 unzip exported_world.zip
-mv ros_ws/src/aws_robomaker_worldforge_* simulation_ws/src/
+mv aws_robomaker_worldforge_pkgs simulation_ws/src/
 ```
 
 Build it again
