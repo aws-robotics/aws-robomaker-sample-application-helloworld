@@ -48,7 +48,7 @@ Launch the application with the following commands:
     roslaunch hello_world_robot deploy_rotate.launch
     ```
 
-- *Running Robot Application Elsewhere*
+- *Running Robot Application in a Simulation*
     ```bash
     source robot_ws/install/local_setup.sh
     roslaunch hello_world_robot rotate.launch
@@ -59,6 +59,10 @@ Launch the application with the following commands:
     source simulation_ws/install/local_setup.sh
     roslaunch hello_world_simulation empty_world.launch
     ```
+
+Note that when running robot applications on a robot, `use_sim_time` should be set to `false` (which is the default value in `deploy_rotate.launch.py`). When running robot applications along with simulation applications, `use_sim_time` should be set to `true` for both applications (which is the default value in both `rotate.launch.py` and `empty_word.launch.py`).
+   		  
+When running simulation applications, run command with `gui:=true` to run gazebo client for visualization
 
 ## Run with a WorldForge world
 
@@ -81,6 +85,14 @@ Launch the application with the following commands:
 ```bash
 source simulation_ws/install/local_setup.sh
 roslaunch hello_world_simulation worldforge_world.launch
+```
+
+By default, WorldForge packages will load the exported world. To override, specify the environment variable `WORLD_ID`. 
+
+```bash
+# use worldId found in "src/aws_robomaker_worldforge_worlds/worlds"
+# e.g, generation_05wq8sybdcn2_world_1
+export WORLD_ID=<worldId>  
 ```
 
 ## Using this sample with RoboMaker
