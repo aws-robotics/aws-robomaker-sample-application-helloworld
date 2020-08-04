@@ -11,9 +11,8 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
   <depend>gazebo_ros</depend>
   <depend>gazebo_plugins</depend>
+  <!-- Required to install .rviz model -->
   <depend>turtlebot3_description</depend>
-  <depend>turtlebot3_gazebo</depend>
-  <depend>turtlebot3_simulations</depend>
   <exec_depend>gazebo</exec_depend>
   <exec_depend>turtlebot3_bringup</exec_depend>
   <export>
