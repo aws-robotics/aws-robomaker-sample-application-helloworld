@@ -66,7 +66,7 @@ When running simulation applications, run command with `gui:=true` to run gazebo
 
 ## Run with a WorldForge world
 
-After exporting a world from [WorldForge](url_for_world_forge), we can unzip the content and move under simulation_ws package:
+After exporting a world from WorldForge, we can unzip the content and move under simulation_ws package:
 
 ```bash
 unzip exported_world.zip
