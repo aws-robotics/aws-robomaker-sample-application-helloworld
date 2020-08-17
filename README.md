@@ -42,6 +42,10 @@ colcon build
 ## Run
 The TURTLEBOT3_MODEL environment variable must be set when running the simulation application (not needed for robot application). Valid values are `burger`, `waffle`, and `waffle_pi`.
 
+```bash
+ export TURTLEBOT3_MODEL=<robot-name>
+```
+
 Launch the application with the following commands:
 
 - *Running Robot Application on a Robot*
@@ -50,7 +54,7 @@ Launch the application with the following commands:
     ros2 launch hello_world_robot deploy_rotate.launch.py
     ```
 
-- *Running Robot Application Elsewhere*
+- *Running Robot Application in a Simulation*
     ```bash
     source robot_ws/install/local_setup.sh
     ros2 launch hello_world_robot rotate.launch.py
@@ -61,6 +65,41 @@ Launch the application with the following commands:
     source simulation_ws/install/local_setup.sh
     ros2 launch hello_world_simulation empty_world.launch.py
     ```
+
+Note that when running robot applications on a robot, `use_sim_time` should be set to `false` (which is the default value in `deploy_rotate.launch.py`). When running robot applications along with simulation applications, `use_sim_time` should be set to `true` for both applications (which is the default value in both `rotate.launch.py` and `empty_word.launch.py`).
+
+When running simulation applications, run command with `gui:=true` to run gazebo client for visualization
+
+## Run simulation with a WorldForge world
+
+After exporting a world from WorldForge, we can unzip the content and move under simulation_ws package:
+
+```bash
+unzip exported_world.zip
+mv aws_robomaker_worldforge_pkgs simulation_ws/src/
+```
+
+Build it again
+
+```bash
+cd simulation_ws
+colcon build
+```
+
+Launch the application with the following commands:
+
+```bash
+source simulation_ws/install/local_setup.sh
+ros2 launch hello_world_simulation worldforge_world.launch.py
+```
+
+By default, WorldForge packages will load the exported world. To override, specify the environment variable `WORLD_ID`. 
+
+```bash
+# use worldId found in "src/aws_robomaker_worldforge_worlds/worlds"
+# e.g, generation_05wq8sybdcn2_world_1 
+export WORLD_ID=<worldId>  
+```
 
 ## Using this sample with RoboMaker
 
