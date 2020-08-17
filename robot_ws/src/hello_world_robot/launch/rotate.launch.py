@@ -34,8 +34,7 @@ def generate_launch_description():
         launch.actions.DeclareLaunchArgument(
             'use_sim_time',
             default_value='true',
-            description='Use sim time',
-            ),
+            description='Use sim time if true. Default: true'),
         launch_ros.actions.Node(
             package='hello_world_robot', node_executable='rotate', output='screen',
             name='rotate')

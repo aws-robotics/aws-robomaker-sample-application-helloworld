@@ -22,7 +22,6 @@ from ament_index_python.packages import get_package_share_directory
 import launch
 
 def generate_launch_description():
-    use_sim_time = launch.substitutions.LaunchConfiguration('use_sim_time', default='false')
     hello_world = get_package_share_directory('hello_world_simulation')
     gazebo_ros = get_package_share_directory('gazebo_ros')
 
@@ -42,37 +41,18 @@ def generate_launch_description():
             os.path.join(turtlebot3_description_reduced_mesh, 'launch', 'spawn_turtlebot.launch.py'))
     )
 
-    turtlebot3_bringup = get_package_share_directory('turtlebot3_bringup')
-    turtlebot3_state_publisher_launch = launch.actions.IncludeLaunchDescription(
-        launch.launch_description_sources.PythonLaunchDescriptionSource(
-            os.path.join(turtlebot3_bringup, 'launch', 'turtlebot3_state_publisher.launch.py')
-        ),
-        launch_arguments={'use_sim_time': use_sim_time}.items()
-    )
-
     return launch.LaunchDescription([
         launch.actions.DeclareLaunchArgument(
           'world',
           default_value=[os.path.join(hello_world, 'worlds', 'empty.world'), ''],
           description='SDF world file'),
         launch.actions.DeclareLaunchArgument(
-            name='model',
-            default_value=launch.substitutions.EnvironmentVariable(
-                'TURTLEBOT3_MODEL'),
-            description='model type [burger, waffle, waffle_pi]'
-        ),
-        launch.actions.DeclareLaunchArgument(
             name='gui',
-            default_value='false'
-        ),
-        launch.actions.DeclareLaunchArgument(
-            name='use_sim_time',
             default_value='false'
         ),
         gazebo_server,
         gazebo_client,
         turtlebot3_description_reduced_mesh_launch,
-        turtlebot3_state_publisher_launch
     ])
 
 
