@@ -62,6 +62,7 @@ Launch the application with the following commands:
 
 - *Running Simulation Application*
     ```bash
+    source /usr/share/gazebo/setup.sh
     source simulation_ws/install/local_setup.sh
     ros2 launch hello_world_simulation empty_world.launch.py
     ```
@@ -89,6 +90,7 @@ colcon build
 Launch the application with the following commands:
 
 ```bash
+source /usr/share/gazebo/setup.sh
 source simulation_ws/install/local_setup.sh
 ros2 launch hello_world_simulation worldforge_world.launch.py
 ```

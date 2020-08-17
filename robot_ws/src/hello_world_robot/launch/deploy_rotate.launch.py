@@ -35,8 +35,7 @@ def generate_launch_description():
     use_sim_time_false = launch.actions.DeclareLaunchArgument(
         'use_sim_time',
         default_value='false',
-        description='Use sim time',
-        )
+        description='Use sim time if true. Default: false')
 
     turtlebot3_bringup_dir = get_package_share_directory('turtlebot3_bringup')
     turtlebot3_bringup_launch = launch.actions.IncludeLaunchDescription(
