@@ -15,7 +15,8 @@
   <arg name="model" default="$(optenv TURTLEBOT3_MODEL waffle_pi)" doc="model type [burger, waffle, waffle_pi]"/>
   <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description_reduced_mesh)/urdf/turtlebot3_$(arg model).urdf.xacro" />
 
-
   <!-- Rotate the robot on launch -->
   <node pkg="hello_world_robot" type="rotate" name="rotate" output="screen"/>
+  <!-- Publish rotate state for transforms -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen"/>
 </launch>
