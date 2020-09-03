@@ -49,13 +49,6 @@ jobs:
         ros-distro: ${{ matrix.distro }}
         gazebo-version: ${{ matrix.gazebo }}
         workspace-dir: simulation_ws
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_ROS2 }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ROS2 }}
-        aws-region: ${{ secrets.AWS_REGION }}
-      if: always()   # always log "push" and "schedule" build failures
 
   log_workflow_status_to_cloudwatch:
     runs-on: ubuntu-latest
