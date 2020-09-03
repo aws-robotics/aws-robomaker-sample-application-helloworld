@@ -34,7 +34,7 @@ jobs:
         sudo chown -R rosbuild:rosbuild "$HOME" .
     - id: robot_ws_build
       name: Build and Bundle Robot Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.1.0
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.1.1
       with:
         ros-distro: ${{ matrix.distro }}
         gazebo-version: ${{ matrix.gazebo }}
@@ -42,7 +42,7 @@ jobs:
         generate-sources: true
     - id: simulation_ws_build
       name: Build and Bundle Simulation Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.1.0
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.1.1
       with:
         ros-distro: ${{ matrix.distro }}
         gazebo-version: ${{ matrix.gazebo }}
