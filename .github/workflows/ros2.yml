@@ -1,0 +1,74 @@
+name: build-and-bundle
+on: 
+  pull_request:
+  push:
+    branches:
+      - ros2
+  # this will currently never trigger on the non-default branch (ros2 scheduled build will be triggered from the default(ros1) branch)
+  schedule:
+    - cron: '0 14 * * *'  # run at 2 pm everyday
+
+jobs:
+  build_and_bundle_ros2:
+    strategy:
+      matrix:
+        distro: ['dashing']
+        gazebo: [9]
+        include:
+        - distro: dashing
+          gazebo: 9
+          ubuntu_distro: bionic
+    runs-on: ubuntu-latest
+    name: 'Build and Bundle (ROS2)'
+    container:
+      image: rostooling/setup-ros-docker:ubuntu-${{ matrix.ubuntu_distro }}-ros-${{ matrix.distro }}-ros-base-latest
+    outputs:
+      robot_ws_build_result: ${{ steps.robot_ws_build.outcome }}
+      simulation_ws_build_result: ${{ steps.simulation_ws_build.outcome }}
+    steps:
+    - name: Checkout Branch
+      uses: actions/checkout@v1
+    - name: Setup Permissions
+      run: |
+        # TODO(ros-tooling/setup-ros-docker#7): calling chown is necessary for now
+        sudo chown -R rosbuild:rosbuild "$HOME" .
+    - id: robot_ws_build
+      name: Build and Bundle Robot Workspace
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.1.1
+      with:
+        ros-distro: ${{ matrix.distro }}
+        gazebo-version: ${{ matrix.gazebo }}
+        workspace-dir: robot_ws
+        generate-sources: true
+    - id: simulation_ws_build
+      name: Build and Bundle Simulation Workspace
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.1.1
+      with:
+        ros-distro: ${{ matrix.distro }}
+        gazebo-version: ${{ matrix.gazebo }}
+        workspace-dir: simulation_ws
+
+  log_workflow_status_to_cloudwatch:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:bionic
+    needs:
+    - build_and_bundle_ros2
+    if: ${{ always() && github.event_name != 'pull_request' }}
+    steps:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_ROS2 }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ROS2 }}
+        aws-region: ${{ secrets.AWS_REGION }}
+    - name: Log Robot Workspace Build Status
+      uses: ros-tooling/action-cloudwatch-metrics@0.0.4
+      with:
+        namespace: RobotWorkspaceBuild
+        metric-value: ${{ ! contains(needs.build_and_bundle_ros2.outputs.robot_ws_build_result, 'failure') }}
+    - name: Log Simulation Workspace Build Status
+      uses: ros-tooling/action-cloudwatch-metrics@0.0.4
+      with:
+        namespace: SimulationWorkspaceBuild
+        metric-value: ${{ ! contains(needs.build_and_bundle_ros2.outputs.simulation_ws_build_result, 'failure') }}
