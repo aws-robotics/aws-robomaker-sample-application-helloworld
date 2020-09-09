@@ -56,6 +56,22 @@ jobs:
         ros-distro: ${{ matrix.distro }}
         gazebo-version: ${{ matrix.gazebo }}
         workspace-dir: simulation_ws
+     - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_ROS1 }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ROS1 }}
+        aws-region: ${{ secrets.AWS_REGION }}
+      if: github.event_name == 'schedule' && github.ref == 'refs/heads/ros1'
+    - id: deploy
+      name: Deploy bundle to S3
+      uses: aws-robomaker-github-actions/s3-cp-action@v2.1.1
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_ROS1 }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        FILES: 'sources.zip sources.tar.gz robot_ws.tar simulation_ws.tar'
+        DEST: 'travis/cloudwatch/${{ steps.robot_ws_build.outputs.ros-distro }}/${{ steps.robot_ws_build.outputs.gazebo-version }}/${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}/'
+      if: github.event_name == 'schedule' # upload to S3 on "schedule" build
 
   log_workflow_status_to_cloudwatch:
     runs-on: ubuntu-latest
