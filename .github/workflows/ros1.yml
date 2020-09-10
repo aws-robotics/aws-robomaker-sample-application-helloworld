@@ -72,13 +72,20 @@ jobs:
         FILES: 'sources.zip sources.tar.gz robot_ws.tar simulation_ws.tar'
         DEST: 'travis/cloudwatch/${{ steps.robot_ws_build.outputs.ros-distro }}/${{ steps.robot_ws_build.outputs.gazebo-version }}/${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}/'
         if: github.event_name == 'schedule' &&  ${{ ! contains(steps.robot_ws_build.outcome, 'failure') }} & ${{ ! contains(steps.simulation_ws_build.outcome, 'failure') }} # upload to S3 on "schedule" build if the build was successful
-    -name: Update App-manifest version number
-      uses: aws-robotics/robomaker-sample-app-ci/update-app-manifest@v2.1.1
+    - name: Get time stamp
+        id: time
+        run: echo "::set-output name=timestamp::$(date +%s)"
+    - name: Update App-manifest version number
+      id: update-app-manifest
+      uses: aws-robotics/robomaker-sample-app-ci/codecommit-put-file-action@v2.1.1
       env:
-        SA_NAME: 'hello-world'
-        ROS_DISTRO: ${{matrix.distro}}
-        GAZEBO_VERSION: ${{matrix.gazebo}}
-        SA_VERSION: ${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}
+        REPO_NAME: 'AppManifest-hello-world-${{matrix.distro}}-gazebo${{matrix.gazebo}}'
+        BRANCH_NAME: 'mainline'
+        FILE_CONTENT: '{\"application_version\": \"${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}\", \"timestamp\":\"${{ steps.time.outputs.timestamp }}\"}'
+        FILE_PATH: '/version.json'
+        COMMIT_MSG: 'Updating to version ${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}.'
+        USER_EMAIL: 'github-action-CI@github.com'
+        USER_NAME: 'github-action-CI'
         if: github.event_name == 'schedule' &&  ${{ ! contains(steps.robot_ws_build.outcome, 'failure') }} & ${{ ! contains(steps.simulation_ws_build.outcome, 'failure') }} # Update app-manifest version number if the build was successful
 
   log_workflow_status_to_cloudwatch:
