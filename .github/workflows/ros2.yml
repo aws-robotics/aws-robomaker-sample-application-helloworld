@@ -74,8 +74,8 @@ jobs:
       env:
         REPO_NAME: 'AppManifest-hello-world-${{matrix.distro}}-gazebo${{matrix.gazebo}}'
         BRANCH_NAME: 'mainline'
-        FILE_CONTENT: '{\"application_version\": \"${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}\", \"timestamp\":\"${{ steps.time.outputs.timestamp }}\"}'
-        FILE_PATH: '/version.json'
+        DEST_FILE_CONTENT: '{\"application_version\": \"${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}\", \"timestamp\":\"${{ steps.time.outputs.timestamp }}\"}'
+        DEST_FILE_PATH: '/version.json'
         COMMIT_MSG: 'Updating to version ${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}.'
         USER_EMAIL: 'github-action-CI@github.com'
         USER_NAME: 'github-action-CI'
