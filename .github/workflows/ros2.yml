@@ -49,6 +49,39 @@ jobs:
         ros-distro: ${{ matrix.distro }}
         gazebo-version: ${{ matrix.gazebo }}
         workspace-dir: simulation_ws
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_ROS1 }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ROS1 }}
+        aws-region: ${{ secrets.AWS_REGION }}
+      if: github.event_name == 'schedule'
+    - id: deploy_bundle
+      name: Deploy bundle to S3
+      uses: aws-robomaker-github-actions/s3-cp-action@2.1.1
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_ROS2 }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        FILES: 'sources.zip sources.tar.gz robot_ws.tar simulation_ws.tar'
+        DEST: 'travis/cloudwatch/${{ steps.robot_ws_build.outputs.ros-distro }}/${{ steps.robot_ws_build.outputs.gazebo-version }}/${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}/'
+        if: github.event_name == 'schedule' &&  ${{ ! contains(steps.robot_ws_build.outcome, 'failure') }} & ${{ ! contains(steps.simulation_ws_build.outcome, 'failure') }} # upload to S3 on "schedule" build if the build was successful
+    - name: Get time stamp
+      id: time
+      run: echo "::set-output name=timestamp::$(date +%s)"
+    - name: Update App-manifest version number
+      id: update-app-manifest
+      uses: aws-robotics/robomaker-sample-app-ci/codecommit-put-file-action@2.1.1
+      env:
+        REPO_NAME: 'AppManifest-hello-world-${{matrix.distro}}-gazebo${{matrix.gazebo}}'
+        BRANCH_NAME: 'mainline'
+        DEST_FILE_CONTENT: '{\"application_version\": \"${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}\", \"timestamp\":\"${{ steps.time.outputs.timestamp }}\"}'
+        DEST_FILE_PATH: '/version.json'
+        COMMIT_MSG: 'Updating to version ${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}.'
+        USER_EMAIL: 'ros-contributions@amazon.com'
+        USER_NAME: 'ros-contributions'
+        if: github.event_name == 'schedule' &&  ${{ ! contains(steps.robot_ws_build.outcome, 'failure') }} & ${{ ! contains(steps.simulation_ws_build.outcome, 'failure') }} # Update app-manifest version number if the build was successful
+
+  
 
   log_workflow_status_to_cloudwatch:
     runs-on: ubuntu-latest
