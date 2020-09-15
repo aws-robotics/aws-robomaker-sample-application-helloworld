@@ -27,7 +27,7 @@ jobs:
         - distro: 'melodic'
           gazebo: 7
     runs-on: ubuntu-latest
-    if: github.event_name != 'push' || github.ref != 'refs/heads/ros2'
+    if: github.event_name != 'push' && github.ref == 'refs/heads/ros1'
     name: 'Build and Bundle (ROS1)'
     container:
       image: rostooling/setup-ros-docker:ubuntu-${{ matrix.ubuntu_distro }}-ros-${{ matrix.distro }}-ros-base-latest
