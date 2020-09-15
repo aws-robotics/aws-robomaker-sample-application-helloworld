@@ -79,8 +79,8 @@ jobs:
       id: update-app-manifest
       uses: aws-robotics/aws-robomaker-github-actions/codecommit-put-file-action@2.3.0
       env:
-        AWS_CODECOMMIT_REPO_NAME: '${{ secrets.CODECOMMIT_REPO_NAME_PREFIX_HELLO_WORLD }}-${{ matrix.distro }}-gazebo${{ matrix.gazebo }}'
-        AWS_CODECOMMIT_BRANCH_NAME: ${{ secrets.CODECOMMIT_BRANCH_NAME_HELLO_WORLD }}
+        AWS_CODECOMMIT_REPO_NAME: '${{ secrets.AWS_CODECOMMIT_REPO_NAME_PREFIX_HELLO_WORLD }}-${{ matrix.distro }}-gazebo${{ matrix.gazebo }}'
+        AWS_CODECOMMIT_BRANCH_NAME: ${{ secrets.AWS_CODECOMMIT_BRANCH_NAME_HELLO_WORLD }}
         DEST_FILE_CONTENT: '{\"application_version\": \"${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}\", \"timestamp\":\"${{ steps.time.outputs.timestamp }}\"}'
         DEST_FILE_PATH: '/version.json'
         COMMIT_MSG: 'Updating to version ${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}.'
