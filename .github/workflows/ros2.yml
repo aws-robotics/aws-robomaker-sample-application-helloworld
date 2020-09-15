@@ -1,11 +1,11 @@
-name: build-and-bundle
+name: build-and-bundle-ros2
 on: 
   pull_request:
   push:
     branches:
       - ros2
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/5 * * * *'
 
 jobs:
   build_and_bundle_ros2:
