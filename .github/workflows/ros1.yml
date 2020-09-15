@@ -1,4 +1,4 @@
-name: build-and-bundle-ros1
+name: build-and-bundle
 on: 
   pull_request:
   push:
