@@ -1,4 +1,4 @@
-name: build-and-bundle
+name: build-and-bundle-ros1
 on: 
   pull_request:
   push:
@@ -43,7 +43,7 @@ jobs:
         sudo chown -R rosbuild:rosbuild "$HOME" .
     - id: robot_ws_build
       name: Build and Bundle Robot Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.1.1
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.3.0
       with:
         ros-distro: ${{ matrix.distro }}
         gazebo-version: ${{ matrix.gazebo }}
@@ -51,7 +51,7 @@ jobs:
         generate-sources: true
     - id: simulation_ws_build
       name: Build and Bundle Simulation Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.1.1
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.3.0
       with:
         ros-distro: ${{ matrix.distro }}
         gazebo-version: ${{ matrix.gazebo }}
@@ -65,7 +65,7 @@ jobs:
       if: github.event_name == 'schedule' && github.ref == 'refs/heads/ros1'
     - id: deploy_bundle
       name: Deploy bundle to S3
-      uses: aws-robomaker-github-actions/s3-cp-action@2.1.1
+      uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@2.3.0
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_ROS1 }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
@@ -77,10 +77,10 @@ jobs:
         run: echo "::set-output name=timestamp::$(date +%s)"
     - name: Update App-manifest version number
       id: update-app-manifest
-      uses: aws-robotics/robomaker-sample-app-ci/codecommit-put-file-action@2.1.1
+      uses: aws-robotics/aws-robomaker-github-actions/codecommit-put-file-action@2.3.0
       env:
-        REPO_NAME: 'AppManifest-hello-world-${{matrix.distro}}-gazebo${{matrix.gazebo}}'
-        BRANCH_NAME: 'mainline'
+        AWS_CODECOMMIT_REPO_NAME: 'AppManifest-hello-world-${{matrix.distro}}-gazebo${{matrix.gazebo}}'
+        AWS_CODECOMMIT_BRANCH_NAME: 'mainline'
         DEST_FILE_CONTENT: '{\"application_version\": \"${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}\", \"timestamp\":\"${{ steps.time.outputs.timestamp }}\"}'
         DEST_FILE_PATH: '/version.json'
         COMMIT_MSG: 'Updating to version ${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}.'
