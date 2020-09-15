@@ -24,7 +24,7 @@ rosdep update
 
 ```bash
 cd robot_ws
-rosws update
+vcs import < .rosinstall
 rosdep install --from-paths src --ignore-src -r -y
 colcon build
 ```
@@ -33,12 +33,17 @@ colcon build
 
 ```bash
 cd simulation_ws
-rosws update
+vcs import < .rosinstall
 rosdep install --from-paths src --ignore-src -r -y
 colcon build
 ```
 
 ## Run
+The `TURTLEBOT3_MODEL` environment variable is optional when running both robot and simulation application. Default value is `waffle_pi`. Valid values are `burger`, `waffle`, and `waffle_pi`. Set it by
+
+```bash
+export TURTLEBOT3_MODEL=<robot-model>
+```
 
 Launch the application with the following commands:
 
