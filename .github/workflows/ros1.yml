@@ -77,7 +77,7 @@ jobs:
         run: echo "::set-output name=timestamp::$(date +%s)"
     - name: Update App-manifest version number
       id: update-app-manifest
-      uses: aws-robotics/robomaker-sample-app-ci/codecommit-put-file-action@master
+      uses: aws-robotics/aws-robomaker-github-actions/codecommit-put-file-action@master
       env:
         REPO_NAME: 'AppManifest-hello-world-${{matrix.distro}}-gazebo${{matrix.gazebo}}'
         BRANCH_NAME: 'mainline'
