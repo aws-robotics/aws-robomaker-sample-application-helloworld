@@ -5,7 +5,7 @@ on:
     branches:
       - ros1
   schedule:
-    - cron: '0/30 * * * *'
+    - cron: '*/10 * * * *'
 
 jobs:
   build_and_bundle_ros1:
