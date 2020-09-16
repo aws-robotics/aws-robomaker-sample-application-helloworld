@@ -5,7 +5,7 @@ on:
     branches:
       - ros2
   schedule:
-    - cron: '0 14 * * *'  # run at 2 pm everyday
+    - cron: '0 14 * * *'  # run at 2 pm UTC/ 7 am PST everyday
 
 jobs:
   build_and_bundle_ros2:
@@ -55,7 +55,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_ROS2 }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ROS2 }}
         aws-region: ${{ secrets.AWS_REGION }}
-      if: github.event_name == 'schedule'
+      if: github.event_name == 'schedule' &&  ${{ ! contains(steps.robot_ws_build.outcome, 'failure') }} & ${{ ! contains(steps.simulation_ws_build.outcome, 'failure') }}
     - id: deploy_bundle
       name: Deploy bundle to S3
       uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@2.3.0
@@ -64,7 +64,7 @@ jobs:
         AWS_REGION: ${{ secrets.AWS_REGION }}
         FILES: 'sources.zip sources.tar.gz robot_ws.tar simulation_ws.tar'
         DEST: 'travis/hello-world/${{ steps.robot_ws_build.outputs.ros-distro }}/${{ steps.robot_ws_build.outputs.gazebo-version }}/${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}/'
-        if: github.event_name == 'schedule' &&  ${{ ! contains(steps.robot_ws_build.outcome, 'failure') }} & ${{ ! contains(steps.simulation_ws_build.outcome, 'failure') }} # upload to S3 on "schedule" build if the build was successful
+      if: github.event_name == 'schedule' &&  ${{ ! contains(steps.robot_ws_build.outcome, 'failure') }} & ${{ ! contains(steps.simulation_ws_build.outcome, 'failure') }} # upload to S3 on "schedule" build if the build was successful
     - name: Get time stamp
       id: time
       run: echo "::set-output name=timestamp::$(date +%s)"
@@ -79,7 +79,7 @@ jobs:
         COMMIT_MSG: 'Updating to version ${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}.'
         USER_EMAIL: 'ros-contributions@amazon.com'
         USER_NAME: 'ros-contributions'
-        if: github.event_name == 'schedule' &&  ${{ ! contains(steps.robot_ws_build.outcome, 'failure') }} & ${{ ! contains(steps.simulation_ws_build.outcome, 'failure') }} # Update app-manifest version number if the build was successful
+      if: github.event_name == 'schedule' &&  ${{ ! contains(steps.robot_ws_build.outcome, 'failure') }} & ${{ ! contains(steps.simulation_ws_build.outcome, 'failure') }} # Update app-manifest version number if the build was successful
 
   
 
