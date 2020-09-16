@@ -77,7 +77,7 @@ jobs:
         AWS_CODECOMMIT_BRANCH_NAME: ${{ secrets.AWS_CODECOMMIT_BRANCH_NAME_HELLO_WORLD }}
         DEST_FILE_CONTENT: '{"application_version": "${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}", "timestamp":"${{ steps.time.outputs.timestamp }}"}'
         DEST_FILE_PATH: '/version.json'
-        COMMIT_MSG: 'Updating to version ${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}.'
+        COMMIT_MSG: 'Updating to version ${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}. Commit for this version bump: ${{ github.sha }}.'
         USER_EMAIL: 'ros-contributions@amazon.com'
         USER_NAME: 'ros-contributions'
       if: ${{ github.event_name == 'schedule' && !contains(steps.robot_ws_build.outcome, 'failure') && !contains(steps.simulation_ws_build.outcome, 'failure') }} # Update app-manifest version number if the build was successful
