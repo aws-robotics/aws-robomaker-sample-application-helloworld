@@ -62,7 +62,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_ROS1 }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ROS1 }}
         aws-region: ${{ secrets.AWS_REGION }}
-      if: github.event_name == 'schedule' && github.ref == 'refs/heads/ros1'
+      if: github.event_name == 'schedule' &&  ${{ ! contains(steps.robot_ws_build.outcome, 'failure') }} & ${{ ! contains(steps.simulation_ws_build.outcome, 'failure') }}
     - id: deploy_bundle
       name: Deploy bundle to S3
       uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@2.3.0
