@@ -81,7 +81,7 @@ jobs:
         USER_NAME: 'ros-contributions'
       if: github.event_name == 'schedule' &&  ${{ ! contains(steps.robot_ws_build.outcome, 'failure') }} && ${{ ! contains(steps.simulation_ws_build.outcome, 'failure') }} # Update app-manifest version number if the build was successful
 
-  
+
 
   log_workflow_status_to_cloudwatch:
     runs-on: ubuntu-latest
