@@ -47,7 +47,10 @@
           },
           "launchConfig": {
             "packageName": "hello_world_robot",
-            "launchFile": "rotate.launch"
+            "launchFile": "rotate.launch",
+            "environmentVariables": {
+              "TURTLEBOT3_MODEL": "waffle_pi"
+            }
           }
         },
         "simulationApp": {
@@ -57,7 +60,10 @@
           "architecture": "X86_64",
           "launchConfig": {
             "packageName": "hello_world_simulation",
-            "launchFile": "empty_world.launch"
+            "launchFile": "empty_world.launch",
+            "environmentVariables": {
+              "TURTLEBOT3_MODEL": "waffle_pi"
+            }
           },
           "robotSoftwareSuite": {
             "version": "<capitalised name of ROS distribution, e.g. Kinetic>",
