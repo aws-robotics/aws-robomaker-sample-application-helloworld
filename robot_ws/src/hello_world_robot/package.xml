@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>hello_world_robot</name>
-  <version>2.1.0</version>
+  <version>2.2.0</version>
   <description>
     AWS RoboMaker robot package with a rotating Turtlebot3
   </description>
