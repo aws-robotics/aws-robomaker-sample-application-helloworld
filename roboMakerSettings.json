@@ -47,7 +47,10 @@
           },
           "launchConfig": {
             "packageName": "hello_world_robot",
-            "launchFile": "rotate.launch.py"
+            "launchFile": "rotate.launch.py",
+            "environmentVariables": {
+              "TURTLEBOT3_MODEL": "waffle_pi"
+            }
           }
         },
         "simulationApp": {
