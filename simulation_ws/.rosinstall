@@ -1,1 +1,2 @@
 - git: {local-name: src/deps/turtlebot3-description-reduced-mesh, uri: "https://github.com/aws-robotics/turtlebot3-description-reduced-mesh.git", version: "ros2"}
+- git: {local-name: src/deps/gazebo-ros-pkgs, uri: "https://github.com/ros-simulation/gazebo_ros_pkgs.git", version: "c071749932a541a5b8aced23c3414724a8cd1949"}
