@@ -50,7 +50,7 @@ jobs:
         gazebo-version: ${{ matrix.gazebo }}
         workspace-dir: simulation_ws
     - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1.5.2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_ROS2 }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ROS2 }}
@@ -93,7 +93,7 @@ jobs:
     if: ${{ always() && github.event_name != 'pull_request' }}
     steps:
     - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1.5.2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_ROS2 }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ROS2 }}
