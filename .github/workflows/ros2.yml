@@ -34,6 +34,8 @@ jobs:
       run: |
         # TODO(ros-tooling/setup-ros-docker#7): calling chown is necessary for now
         sudo chown -R rosbuild:rosbuild "$HOME" .
+    - name: test-git-secret-actions
+      uses: aws-robotics/aws-robomaker-github-actions/git-secrets-scan-action@2.3.3
     - id: robot_ws_build
       name: Build and Bundle Robot Workspace
       uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.3.3
