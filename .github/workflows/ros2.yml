@@ -35,10 +35,10 @@ jobs:
         # TODO(ros-tooling/setup-ros-docker#7): calling chown is necessary for now
         sudo chown -R rosbuild:rosbuild "$HOME" .
     - name: Scan using git-secrets
-      uses: aws-robotics/aws-robomaker-github-actions/git-secrets-scan-action@2.4.0
+      uses: aws-robotics/aws-robomaker-github-actions/git-secrets-scan-action@2.4.1
     - id: robot_ws_build
       name: Build and Bundle Robot Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.4.0
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.4.1
       with:
         ros-distro: ${{ matrix.distro }}
         gazebo-version: ${{ matrix.gazebo }}
@@ -46,7 +46,7 @@ jobs:
         generate-sources: true
     - id: simulation_ws_build
       name: Build and Bundle Simulation Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.4.0
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.4.1
       with:
         ros-distro: ${{ matrix.distro }}
         gazebo-version: ${{ matrix.gazebo }}
@@ -60,7 +60,7 @@ jobs:
       if: ${{ github.event_name == 'schedule' && !contains(steps.robot_ws_build.outcome, 'failure') && !contains(steps.simulation_ws_build.outcome, 'failure') }}
     - id: deploy_bundle
       name: Deploy bundle to S3
-      uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@2.4.0
+      uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@2.4.1
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_ROS2 }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
@@ -73,7 +73,7 @@ jobs:
       if: ${{ github.event_name == 'schedule' && !contains(steps.robot_ws_build.outcome, 'failure') && !contains(steps.simulation_ws_build.outcome, 'failure') }}
     - name: Update App-manifest version number
       id: update-app-manifest
-      uses: aws-robotics/aws-robomaker-github-actions/codecommit-put-file-action@2.4.0
+      uses: aws-robotics/aws-robomaker-github-actions/codecommit-put-file-action@2.4.1
       env:
         AWS_CODECOMMIT_REPO_NAME: '${{ secrets.AWS_CODECOMMIT_REPO_NAME_PREFIX_HELLO_WORLD }}-${{ matrix.distro }}-gazebo${{ matrix.gazebo }}'
         AWS_CODECOMMIT_BRANCH_NAME: ${{ secrets.AWS_CODECOMMIT_BRANCH_NAME_HELLO_WORLD }}
