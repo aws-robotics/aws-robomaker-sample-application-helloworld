@@ -20,9 +20,9 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))  # noqa
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', 'launch'))  # noqa
 
-import launch
-
 from ament_index_python.packages import get_package_share_directory
+
+import launch
 
 import launch_ros.actions
 
@@ -43,7 +43,7 @@ def generate_launch_description():
         name='rotate')
 
     ld = launch.LaunchDescription([use_sim_time_false, turtlebot3_bringup_launch, rotate_node])
-    return ld 
+    return ld
 
 
 if __name__ == '__main__':

@@ -17,16 +17,21 @@ import os
 from ament_index_python.packages import get_package_share_directory
 import launch
 
+
 def generate_launch_description():
     worldforge_world = get_package_share_directory('aws_robomaker_worldforge_worlds')
     worldforge_world_launch = launch.actions.IncludeLaunchDescription(
         launch.launch_description_sources.PythonLaunchDescriptionSource(
             os.path.join(worldforge_world, 'launch', 'launch_world.py'))
     )
-    turtlebot3_description_reduced_mesh = get_package_share_directory('turtlebot3_description_reduced_mesh')
+    turtlebot3_description_reduced_mesh = get_package_share_directory(
+        'turtlebot3_description_reduced_mesh')
     turtlebot3_description_reduced_mesh_launch = launch.actions.IncludeLaunchDescription(
         launch.launch_description_sources.PythonLaunchDescriptionSource(
-            os.path.join(turtlebot3_description_reduced_mesh, 'launch', 'spawn_turtlebot.launch.py'))
+            os.path.join(turtlebot3_description_reduced_mesh,
+            'launch',
+            'spawn_turtlebot.launch.py'
+            ))
     )
 
     return launch.LaunchDescription([
