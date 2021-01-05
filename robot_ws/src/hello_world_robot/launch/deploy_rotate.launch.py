@@ -22,16 +22,12 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', 'launch')
 
 import launch
 
-from launch_ros import get_default_launch_description
-import launch_ros.actions
-
 from ament_index_python.packages import get_package_share_directory
 
-import lifecycle_msgs.msg
+import launch_ros.actions
 
 
 def generate_launch_description():
-    """Main."""
     use_sim_time_false = launch.actions.DeclareLaunchArgument(
         'use_sim_time',
         default_value='false',
@@ -41,11 +37,11 @@ def generate_launch_description():
     turtlebot3_bringup_launch = launch.actions.IncludeLaunchDescription(
         launch.launch_description_sources.PythonLaunchDescriptionSource(
             turtlebot3_bringup_dir + '/launch/robot.launch.py'))
-    
+
     rotate_node = launch_ros.actions.Node(
         package='hello_world_robot', node_executable='rotate', output='screen',
         name='rotate')
-    
+
     ld = launch.LaunchDescription([use_sim_time_false, turtlebot3_bringup_launch, rotate_node])
     return ld 
 
