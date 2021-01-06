@@ -68,9 +68,9 @@ jobs:
       uses: ros-tooling/action-cloudwatch-metrics@0.0.4
       with:
         namespace: RobotWorkspaceBuild
-        metric-value: ${{ ! contains(needs.build_and_bundle_ros2.outputs.robot_ws_build_result, 'failure') }}
+        metric-value: ${{ contains(needs.build_and_bundle_ros2.outputs.robot_ws_build_result, 'success') }}
     - name: Log Simulation Workspace Build Status
       uses: ros-tooling/action-cloudwatch-metrics@0.0.4
       with:
         namespace: SimulationWorkspaceBuild
-        metric-value: ${{ ! contains(needs.build_and_bundle_ros2.outputs.simulation_ws_build_result, 'failure') }}
+        metric-value: ${{ contains(needs.build_and_bundle_ros2.outputs.simulation_ws_build_result, 'success') }}
