@@ -27,8 +27,9 @@ def generate_launch_description():
     gazebo_ros = get_package_share_directory('gazebo_ros')
 
     gazebo_client = launch.actions.IncludeLaunchDescription(
-	launch.launch_description_sources.PythonLaunchDescriptionSource(
-            os.path.join(gazebo_ros, 'launch', 'gzclient.launch.py')),
+        launch.launch_description_sources.PythonLaunchDescriptionSource(
+            os.path.join(gazebo_ros, 'launch', 'gzclient.launch.py')
+        ),
         condition=launch.conditions.IfCondition(launch.substitutions.LaunchConfiguration('gui'))
      )
     gazebo_server = launch.actions.IncludeLaunchDescription(
@@ -60,5 +61,3 @@ def generate_launch_description():
         gazebo_client,
         turtlebot3_description_reduced_mesh_launch,
     ])
-
-

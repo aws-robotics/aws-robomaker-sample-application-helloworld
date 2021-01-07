@@ -29,9 +29,10 @@ def generate_launch_description():
     turtlebot3_description_reduced_mesh_launch = launch.actions.IncludeLaunchDescription(
         launch.launch_description_sources.PythonLaunchDescriptionSource(
             os.path.join(turtlebot3_description_reduced_mesh,
-            'launch',
-            'spawn_turtlebot.launch.py'
-            ))
+                        'launch',
+                        'spawn_turtlebot.launch.py'
+                        )
+            )
     )
 
     return launch.LaunchDescription([

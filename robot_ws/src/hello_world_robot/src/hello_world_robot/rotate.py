@@ -18,14 +18,14 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import time
 
+from geometry_msgs.msg import Twist
+
 import rclpy
 from rclpy.node import Node
 
-from geometry_msgs.msg import Twist
-
 
 class Rotator(Node):
-    
+ 
     def __init__(self):
         super().__init__('rotate')
         self._cmd_pub = self.create_publisher(Twist, '/cmd_vel')
