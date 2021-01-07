@@ -25,7 +25,7 @@ from rclpy.node import Node
 
 
 class Rotator(Node):
- 
+
     def __init__(self):
         super().__init__('rotate')
         self._cmd_pub = self.create_publisher(Twist, '/cmd_vel')
