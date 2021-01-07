@@ -20,21 +20,21 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))  # noqa
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', 'launch'))  # noqa
 
+from ament_index_python.packages import get_package_share_directory
+
 import launch
 
-from launch_ros import get_default_launch_description
 import launch_ros.actions
 
-import lifecycle_msgs.msg
-
-from ament_index_python.packages import get_package_share_directory
- 
 TURTLEBOT3_MODEL = os.environ.get('TURTLEBOT3_MODEL', 'waffle_pi')
 
+
 def generate_launch_description():
-    """Main."""
     turtlebot_urdf_file_name = 'turtlebot3_' + TURTLEBOT3_MODEL + '.urdf'
-    turtlebot_urdf_file_path = os.path.join(get_package_share_directory('turtlebot3_description_reduced_mesh'), 'urdf', turtlebot_urdf_file_name)
+    turtlebot_urdf_file_path = os.path.join(
+        get_package_share_directory('turtlebot3_description_reduced_mesh'),
+        'urdf',
+        turtlebot_urdf_file_name)
 
     ld = launch.LaunchDescription([
         launch.actions.DeclareLaunchArgument(
@@ -56,7 +56,7 @@ def generate_launch_description():
                 turtlebot_urdf_file_path
             ])
     ])
-    return ld 
+    return ld
 
 
 if __name__ == '__main__':

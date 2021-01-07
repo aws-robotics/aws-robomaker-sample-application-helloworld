@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 package_name = 'hello_world_robot'
 
@@ -37,4 +37,3 @@ setup(
         ],
     },
 )
-

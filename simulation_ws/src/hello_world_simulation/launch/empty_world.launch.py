@@ -21,13 +21,15 @@ import os
 from ament_index_python.packages import get_package_share_directory
 import launch
 
+
 def generate_launch_description():
     hello_world = get_package_share_directory('hello_world_simulation')
     gazebo_ros = get_package_share_directory('gazebo_ros')
 
     gazebo_client = launch.actions.IncludeLaunchDescription(
-	launch.launch_description_sources.PythonLaunchDescriptionSource(
-            os.path.join(gazebo_ros, 'launch', 'gzclient.launch.py')),
+        launch.launch_description_sources.PythonLaunchDescriptionSource(
+            os.path.join(gazebo_ros, 'launch', 'gzclient.launch.py')
+        ),
         condition=launch.conditions.IfCondition(launch.substitutions.LaunchConfiguration('gui'))
      )
     gazebo_server = launch.actions.IncludeLaunchDescription(
@@ -35,10 +37,15 @@ def generate_launch_description():
             os.path.join(gazebo_ros, 'launch', 'gzserver.launch.py'))
     )
 
-    turtlebot3_description_reduced_mesh = get_package_share_directory('turtlebot3_description_reduced_mesh')
+    turtlebot3_description_reduced_mesh = get_package_share_directory(
+        'turtlebot3_description_reduced_mesh')
     turtlebot3_description_reduced_mesh_launch = launch.actions.IncludeLaunchDescription(
         launch.launch_description_sources.PythonLaunchDescriptionSource(
-            os.path.join(turtlebot3_description_reduced_mesh, 'launch', 'spawn_turtlebot.launch.py'))
+            os.path.join(
+                turtlebot3_description_reduced_mesh,
+                'launch',
+                'spawn_turtlebot.launch.py'
+                ))
     )
 
     return launch.LaunchDescription([
@@ -54,5 +61,3 @@ def generate_launch_description():
         gazebo_client,
         turtlebot3_description_reduced_mesh_launch,
     ])
-
-
