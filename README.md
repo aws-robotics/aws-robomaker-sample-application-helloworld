@@ -153,4 +153,5 @@ MIT-0 - See LICENSE for further information
 
 ## How to Contribute
 
-Create issues and pull requests against this Repository on Github
+- Create issues and pull requests against this Repository on Github
+- Please run your changes through the linter scripts provided in scripts/lint.sh
