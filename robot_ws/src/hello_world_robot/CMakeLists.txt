@@ -54,7 +54,7 @@ include_directories(
 # Install
 ################################################################################
 catkin_install_python(PROGRAMS 
-  nodes/rotate
+  nodes/rotate.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
