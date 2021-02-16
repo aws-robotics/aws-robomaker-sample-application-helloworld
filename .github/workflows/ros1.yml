@@ -51,6 +51,7 @@ jobs:
         gazebo-version: ${{ matrix.gazebo }}
         workspace-dir: robot_ws
         generate-sources: true
+        colcon-bundle-retries: 3
     - id: simulation_ws_build
       name: Build and Bundle Simulation Workspace
       uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.4.2
@@ -58,6 +59,7 @@ jobs:
         ros-distro: ${{ matrix.distro }}
         gazebo-version: ${{ matrix.gazebo }}
         workspace-dir: simulation_ws
+        colcon-bundle-retries: 3
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1.5.4
       with:
