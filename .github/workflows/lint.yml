@@ -6,7 +6,7 @@ jobs:
   ament_lint:
     runs-on: ubuntu-latest
     container:
-      image: rostooling/setup-ros-docker:ubuntu-bionic-ros-eloquent-ros-base-latest
+      image: rostooling/setup-ros-docker:ubuntu-focal-ros-rolling-ros-base-latest
     strategy:
       fail-fast: false
       matrix:
@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ros-tooling/action-ros-lint@v0.1
         with:
+          distribution: rolling
           linter: ${{ matrix.linter }}
           package-name: |
             hello_world_simulation
