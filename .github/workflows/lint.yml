@@ -6,7 +6,7 @@ jobs:
   ament_lint:
     runs-on: ubuntu-latest
     container:
-      image: rostooling/setup-ros-docker:ubuntu-bionic-ros-rolling-ros-base-latest
+      image: rostooling/setup-ros-docker:ubuntu-focal-ros-rolling-ros-base-latest
     strategy:
       fail-fast: false
       matrix:
