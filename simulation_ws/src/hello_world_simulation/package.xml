@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>hello_world_simulation</name>
-  <version>1.4.0</version>
+  <version>1.4.1</version>
   <description>
     AWS RoboMaker simulation package with a TurtleBot3 in an empty Gazebo world.
   </description>
