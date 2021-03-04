@@ -28,7 +28,10 @@ class Rotator(Node):
 
     def __init__(self):
         super().__init__('rotate')
-        self._cmd_pub = self.create_publisher(Twist, '/cmd_vel')
+        # For Foxy, qos_profile is a required field for create_publisher api
+        # We might want to have different branches for Dashing and Foxy
+        # so that sapmple app works for both Dashing and Foxy
+        self._cmd_pub = self.create_publisher(Twist, '/cmd_vel', 10)
 
     def rotate_forever(self):
         twist = Twist()
