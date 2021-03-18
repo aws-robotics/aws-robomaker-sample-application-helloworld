@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
     branches:
-      - ros2
+      - ros2_foxy
   schedule:
     - cron: '0 2,14 * * *'  # run at 2am & 2pm UTC i.e. 7pm & 7am PST everyday
 
@@ -14,11 +14,11 @@ jobs:
         distro: ['foxy']
         gazebo: [11]
         include:
-        - distro: dashing
+        - distro: foxy
           gazebo: 11
           ubuntu_distro: focal
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'schedule' || github.ref == 'refs/heads/ros2' }}
+    if: ${{ github.event_name == 'schedule' || github.ref == 'refs/heads/ros2_foxy' }}
     name: 'Build and Bundle (ROS2)'
     container:
       image: rostooling/setup-ros-docker:ubuntu-${{ matrix.ubuntu_distro }}-ros-${{ matrix.distro }}-ros-base-latest
@@ -29,7 +29,7 @@ jobs:
     - name: Checkout Branch
       uses: actions/checkout@v1
       with:
-        ref: 'ros2'
+        ref: 'ros2_foxy'
     - name: Setup Permissions
       run: |
         # TODO(ros-tooling/setup-ros-docker#7): calling chown is necessary for now
@@ -108,7 +108,7 @@ jobs:
         metric-dimensions: >-
           [
             { "Name": "github.event_name", "Value": "${{ github.event_name }}" },
-            { "Name": "github.ref", "Value": "refs/heads/ros2" },
+            { "Name": "github.ref", "Value": "refs/heads/ros2_foxy" },
             { "Name": "github.repository", "Value": "${{ github.repository }}" }
           ]
         namespace: RobotWorkspaceBuild
@@ -119,7 +119,7 @@ jobs:
         metric-dimensions: >-
           [
             { "Name": "github.event_name", "Value": "${{ github.event_name }}" },
-            { "Name": "github.ref", "Value": "refs/heads/ros2" },
+            { "Name": "github.ref", "Value": "refs/heads/ros2_foxy" },
             { "Name": "github.repository", "Value": "${{ github.repository }}" }
           ]
         namespace: SimulationWorkspaceBuild
@@ -130,7 +130,7 @@ jobs:
         metric-dimensions: >-
           [
             { "Name": "github.event_name", "Value": "${{ github.event_name }}" },
-            { "Name": "github.ref", "Value": "refs/heads/ros2" },
+            { "Name": "github.ref", "Value": "refs/heads/ros2_foxy" },
             { "Name": "github.repository", "Value": "${{ github.repository }}" }
           ]
         namespace: BundleUpload
