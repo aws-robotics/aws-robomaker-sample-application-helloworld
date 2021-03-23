@@ -45,7 +45,6 @@ jobs:
         workspace-dir: robot_ws
         generate-sources: true
         colcon-bundle-retries: 3
-        ubuntu-distro: ${{ matrix.ubuntu_distro }}
     - id: simulation_ws_build
       name: Build and Bundle Simulation Workspace
       uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.5
@@ -54,4 +53,3 @@ jobs:
         gazebo-version: ${{ matrix.gazebo }}
         workspace-dir: simulation_ws
         colcon-bundle-retries: 3
-        ubuntu-distro: ${{ matrix.ubuntu_distro }}
