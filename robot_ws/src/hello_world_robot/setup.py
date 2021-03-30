@@ -12,8 +12,9 @@ package_name = 'hello_world_robot'
 class CopyRvizModelToPackageDir(install):
 
     def run(self):
-        rviz_file = get_package_share_directory('turtlebot3_description')+'/rviz/model.rviz'
-        dest_dir = 'rviz' #this is relative to hello_world_robot package directory
+        rviz_file = get_package_share_directory('turtlebot3_description') \
+            + '/rviz/model.rviz'
+        dest_dir = 'rviz'  # this is relative to hello_world_robot package directory
         if not os.path.isdir(dest_dir):
             os.mkdir(dest_dir)
         copyfile(rviz_file, dest_dir+'/turtlebot3_description.rviz')
