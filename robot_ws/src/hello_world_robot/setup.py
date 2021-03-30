@@ -9,13 +9,13 @@ from setuptools.command.install import install
 package_name = 'hello_world_robot'
 
 
-class CopyRvizModel(install):
+class CopyRvizModelToPackageDir(install):
 
     def run(self):
-        src = get_package_share_directory('turtlebot3_description')+'/rviz/model.rviz'
+        rviz_file = get_package_share_directory('turtlebot3_description')+'/rviz/model.rviz'
         dest_dir = 'rviz' #this is relative to hello_world_robot package directory
         os.mkdir(dest_dir)
-        copyfile(src, dest_dir+'/turtlebot3_description.rviz')
+        copyfile(rviz_file, dest_dir+'/turtlebot3_description.rviz')
         install.run(self)
 
 
@@ -25,7 +25,7 @@ setup(
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
     cmdclass={
-        'install': CopyRvizModel,
+        'install': CopyRvizModelToPackageDir,
     },
     data_files=[
         ('share/' + package_name + '/launch', ['launch/rotate.launch.py']),
