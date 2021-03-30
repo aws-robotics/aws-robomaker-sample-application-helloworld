@@ -19,7 +19,7 @@ class CopyRvizModel(install):
 
 setup(
     name=package_name,
-    version='2.0.0',
+    version='2.2.1',
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
     cmdclass={
