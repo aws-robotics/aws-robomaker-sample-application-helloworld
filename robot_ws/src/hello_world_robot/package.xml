@@ -12,6 +12,7 @@
   <depend>rclpy</depend>
   <depend>geometry_msgs</depend>
   <depend>robot_state_publisher</depend>
+  <depend>turtlebot3_description</depend>
   <exec_depend>turtlebot3_bringup</exec_depend>
   <test_depend>python3-pytest</test_depend>
   <export>
