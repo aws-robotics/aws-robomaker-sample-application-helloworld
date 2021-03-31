@@ -17,7 +17,7 @@ class CopyRvizModelToPackageDir(install):
         dest_dir = 'rviz'  # this is relative to hello_world_robot package directory
         if not os.path.isdir(dest_dir):
             os.mkdir(dest_dir)
-        copyfile(rviz_file, dest_dir+'/turtlebot3_description.rviz')
+        copyfile(rviz_file, dest_dir+'/turtlebot3_model.rviz')
         install.run(self)
 
 
@@ -34,7 +34,7 @@ setup(
         ('share/' + package_name + '/launch', ['launch/deploy_rotate.launch.py']),
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('rviz/', ['rviz/turtlebot3_description.rviz'])
+        ('rviz/', ['rviz/turtlebot3_model.rviz'])
     ],
     install_requires=['setuptools'],
     zip_safe=True,
