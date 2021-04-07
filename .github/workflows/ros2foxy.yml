@@ -63,7 +63,7 @@ jobs:
       if: ${{ github.event_name == 'schedule' && contains(steps.robot_ws_build.outcome, 'success') && contains(steps.simulation_ws_build.outcome, 'success') }}
     - id: upload_bundle
       name: Upload bundle to S3
-      uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@2.4.2
+      uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@2.5.1
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_ROS2 }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
@@ -76,7 +76,7 @@ jobs:
       if: ${{ github.event_name == 'schedule' && contains(steps.robot_ws_build.outcome, 'success') && contains(steps.simulation_ws_build.outcome, 'success') }}
     - name: Update App-manifest version number
       id: update-app-manifest
-      uses: aws-robotics/aws-robomaker-github-actions/codecommit-put-file-action@2.4.2
+      uses: aws-robotics/aws-robomaker-github-actions/codecommit-put-file-action@2.5.1
       env:
         AWS_CODECOMMIT_REPO_NAME: '${{ secrets.AWS_CODECOMMIT_REPO_NAME_PREFIX_HELLO_WORLD }}-${{ matrix.distro }}-gazebo${{ matrix.gazebo }}'
         AWS_CODECOMMIT_BRANCH_NAME: ${{ secrets.AWS_CODECOMMIT_BRANCH_NAME_HELLO_WORLD }}
