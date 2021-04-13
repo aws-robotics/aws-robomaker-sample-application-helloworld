@@ -34,7 +34,7 @@ setup(
         ('share/' + package_name + '/launch', ['launch/deploy_rotate.launch.py']),
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('rviz/', ['rviz/turtlebot3_model.rviz'])
+        ('share/rviz/', ['rviz/turtlebot3_model.rviz'])
     ],
     install_requires=['setuptools'],
     zip_safe=True,
