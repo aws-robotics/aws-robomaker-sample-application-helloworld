@@ -90,50 +90,50 @@ jobs:
 
 
   log_workflow_status_to_cloudwatch:
-  runs-on: ubuntu-latest
-  container:
-    image: ubuntu:focal
-  needs:
-  - build_and_bundle_ros2_foxy
-  if: ${{ always() && github.event_name != 'pull_request' }}
-  steps:
-  - name: Configure AWS Credentials
-    uses: aws-actions/configure-aws-credentials@v1.5.4
-    with:
-      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_ROS2 }}
-      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ROS2 }}
-      aws-region: ${{ secrets.AWS_REGION }}
-  - name: Log Robot Workspace Build Status
-    uses: ros-tooling/action-cloudwatch-metrics@0.0.4
-    with:
-      metric-dimensions: >-
-        [
-          { "Name": "github.event_name", "Value": "${{ github.event_name }}" },
-          { "Name": "github.ref", "Value": "refs/heads/ros2_foxy" },
-          { "Name": "github.repository", "Value": "${{ github.repository }}" }
-        ]
-      namespace: RobotWorkspaceBuild
-      metric-value: ${{ contains(needs.build_and_bundle_ros2_foxy.outputs.robot_ws_build_result, 'success') }}
-  - name: Log Simulation Workspace Build Status
-    uses: ros-tooling/action-cloudwatch-metrics@0.0.4
-    with:
-      metric-dimensions: >-
-        [
-          { "Name": "github.event_name", "Value": "${{ github.event_name }}" },
-          { "Name": "github.ref", "Value": "refs/heads/ros2_foxy" },
-          { "Name": "github.repository", "Value": "${{ github.repository }}" }
-        ]
-      namespace: SimulationWorkspaceBuild
-      metric-value: ${{ contains(needs.build_and_bundle_ros2_foxy.outputs.simulation_ws_build_result, 'success') }}
-  - name: Log Bundle Upload Status
-    uses: ros-tooling/action-cloudwatch-metrics@0.0.4
-    with:
-      metric-dimensions: >-
-        [
-          { "Name": "github.event_name", "Value": "${{ github.event_name }}" },
-          { "Name": "github.ref", "Value": "refs/heads/ros2_foxy" },
-          { "Name": "github.repository", "Value": "${{ github.repository }}" }
-        ]
-      namespace: BundleUpload
-      metric-value: ${{ contains(needs.build_and_bundle_ros2_foxy.result, 'success') }}
-    if: ${{ github.event_name == 'schedule' }}
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:focal
+    needs:
+    - build_and_bundle_ros2_foxy
+    if: ${{ always() && github.event_name != 'pull_request' }}
+    steps:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1.5.4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_ROS2 }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ROS2 }}
+        aws-region: ${{ secrets.AWS_REGION }}
+    - name: Log Robot Workspace Build Status
+      uses: ros-tooling/action-cloudwatch-metrics@0.0.4
+      with:
+        metric-dimensions: >-
+          [
+            { "Name": "github.event_name", "Value": "${{ github.event_name }}" },
+            { "Name": "github.ref", "Value": "refs/heads/ros2_foxy" },
+            { "Name": "github.repository", "Value": "${{ github.repository }}" }
+          ]
+        namespace: RobotWorkspaceBuild
+        metric-value: ${{ contains(needs.build_and_bundle_ros2_foxy.outputs.robot_ws_build_result, 'success') }}
+    - name: Log Simulation Workspace Build Status
+      uses: ros-tooling/action-cloudwatch-metrics@0.0.4
+      with:
+        metric-dimensions: >-
+          [
+            { "Name": "github.event_name", "Value": "${{ github.event_name }}" },
+            { "Name": "github.ref", "Value": "refs/heads/ros2_foxy" },
+            { "Name": "github.repository", "Value": "${{ github.repository }}" }
+          ]
+        namespace: SimulationWorkspaceBuild
+        metric-value: ${{ contains(needs.build_and_bundle_ros2_foxy.outputs.simulation_ws_build_result, 'success') }}
+    - name: Log Bundle Upload Status
+      uses: ros-tooling/action-cloudwatch-metrics@0.0.4
+      with:
+        metric-dimensions: >-
+          [
+            { "Name": "github.event_name", "Value": "${{ github.event_name }}" },
+            { "Name": "github.ref", "Value": "refs/heads/ros2_foxy" },
+            { "Name": "github.repository", "Value": "${{ github.repository }}" }
+          ]
+        namespace: BundleUpload
+        metric-value: ${{ contains(needs.build_and_bundle_ros2_foxy.result, 'success') }}
+      if: ${{ github.event_name == 'schedule' }}
