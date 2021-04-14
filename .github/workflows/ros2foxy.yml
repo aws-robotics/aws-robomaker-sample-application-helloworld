@@ -92,9 +92,9 @@ jobs:
   log_workflow_status_to_cloudwatch:
   runs-on: ubuntu-latest
   container:
-    image: ubuntu:bionic
+    image: ubuntu:focal
   needs:
-  - build_and_bundle_ros2
+  - build_and_bundle_ros2_foxy
   if: ${{ always() && github.event_name != 'pull_request' }}
   steps:
   - name: Configure AWS Credentials
@@ -113,7 +113,7 @@ jobs:
           { "Name": "github.repository", "Value": "${{ github.repository }}" }
         ]
       namespace: RobotWorkspaceBuild
-      metric-value: ${{ contains(needs.build_and_bundle_ros2.outputs.robot_ws_build_result, 'success') }}
+      metric-value: ${{ contains(needs.build_and_bundle_ros2_foxy.outputs.robot_ws_build_result, 'success') }}
   - name: Log Simulation Workspace Build Status
     uses: ros-tooling/action-cloudwatch-metrics@0.0.4
     with:
@@ -124,7 +124,7 @@ jobs:
           { "Name": "github.repository", "Value": "${{ github.repository }}" }
         ]
       namespace: SimulationWorkspaceBuild
-      metric-value: ${{ contains(needs.build_and_bundle_ros2.outputs.simulation_ws_build_result, 'success') }}
+      metric-value: ${{ contains(needs.build_and_bundle_ros2_foxy.outputs.simulation_ws_build_result, 'success') }}
   - name: Log Bundle Upload Status
     uses: ros-tooling/action-cloudwatch-metrics@0.0.4
     with:
@@ -135,5 +135,5 @@ jobs:
           { "Name": "github.repository", "Value": "${{ github.repository }}" }
         ]
       namespace: BundleUpload
-      metric-value: ${{ contains(needs.build_and_bundle_ros2.result, 'success') }}
+      metric-value: ${{ contains(needs.build_and_bundle_ros2_foxy.result, 'success') }}
     if: ${{ github.event_name == 'schedule' }}
