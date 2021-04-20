@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        linter: [flake8, pep257, xmllint]
+        linter: [flake8, pep257, xmllint, copyright]
     steps:
       - uses: actions/checkout@v2
       - uses: ros-tooling/action-ros-lint@v0.1
