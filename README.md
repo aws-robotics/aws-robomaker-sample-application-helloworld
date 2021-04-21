@@ -9,7 +9,7 @@ _RoboMaker sample applications include third-party software licensed under open-
 - [ROS2 Dashing](https://index.ros.org//doc/ros2/Installation/Dashing) - Other versions may work, however they have not been tested
 - [Colcon](https://colcon.readthedocs.io/en/released/user/installation.html) - Used for building and bundling the application.
 - [vcs](https://github.com/dirk-thomas/vcstool#how-to-install-vcstool) - Used to pull in sample app dependencies
-- [rosdep](http://wiki.ros.org/rosdep) - rosdep is a command-line tool for installing system dependencies.
+- [rosdep](http://wiki.ros.org/rosdep#Installing_rosdep) - rosdep is a command-line tool for installing system dependencies.
 
 ## Build
 
