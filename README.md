@@ -6,7 +6,7 @@ _RoboMaker sample applications include third-party software licensed under open-
 
 ## Requirements
 
-- [ROS2 Dashing](https://index.ros.org//doc/ros2/Installation/Dashing) or [ROS2 Foxy](https://docs.ros.org/en/foxy/Installation.html) - Other versions may work, however they have not been tested
+- [ROS2 Foxy](https://docs.ros.org/en/foxy/Installation.html) - Other versions may work, however they have not been tested
 - [Colcon](https://colcon.readthedocs.io/en/released/user/installation.html) - Used for building and bundling the application.
 
 ## Build
