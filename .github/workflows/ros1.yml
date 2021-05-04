@@ -11,21 +11,12 @@ jobs:
   build_and_bundle_ros1:
     strategy:
       matrix:
-        distro: ['kinetic', 'melodic']
-        gazebo: [7, 9]
+        distro: ['melodic']
+        gazebo: [9]
         include:
-        - distro: kinetic
-          gazebo: 7
-          ubuntu_distro: xenial
-        - distro: kinetic
-          gazebo: 9
-          ubuntu_distro: xenial
         - distro: melodic
           gazebo: 9
           ubuntu_distro: bionic
-        exclude:
-        - distro: 'melodic'
-          gazebo: 7
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'push' || github.ref != 'refs/heads/ros2' }}
     name: 'Build and Bundle (ROS1)'
