@@ -4,35 +4,31 @@ This demonstrates the structure of a ROS project that works with RoboMaker by cr
 
 _RoboMaker sample applications include third-party software licensed under open-source licenses and is provided for demonstration purposes only. Incorporation or use of RoboMaker sample applications in connection with your production workloads or a commercial products or devices may affect your legal rights or obligations under the applicable open-source licenses. Source code information can be found [here](https://s3.console.aws.amazon.com/s3/buckets/robomaker-applications-us-east-1-72fc243f9355/hello-world/?region=us-east-1)._
 
-## Requirements
+## Installation
 
-- [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu) - Other versions may work, however they have not been tested
+The following will be installed:
 - [Colcon](https://colcon.readthedocs.io/en/released/user/installation.html) - Used for building and bundling the application.
 - [vcstool](https://github.com/dirk-thomas/vcstool#how-to-install-vcstool) - Used to pull in sample app dependencies that are only available from source, not from apt or pip.
 - [rosdep](http://wiki.ros.org/rosdep#Installing_rosdep) - rosdep is a command-line tool for installing system dependencies of ROS packages.
 
-## Build
-### Install requirements
-Follow links above for instructions on installing required software.
+If ROS is detected, then ROS Installation will be skipped, otherwise ROS Melodic will be installed.
+- [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu) - Other versions may work, however they have not been tested
 
-### Pre-build commands
 
 ```bash
-sudo apt-get update
-rosdep update
+source scripts/setup.sh
+
 ```
 
-### Robot
-
+## Build
+Robot Application
 ```bash
 cd robot_ws
 vcs import < .rosinstall
 rosdep install --from-paths src --ignore-src -r -y
 colcon build
 ```
-
-### Simulation
-
+Simulation Application
 ```bash
 cd simulation_ws
 vcs import < .rosinstall
