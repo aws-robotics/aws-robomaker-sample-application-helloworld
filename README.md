@@ -21,18 +21,16 @@ source scripts/setup.sh
 ```
 
 ## Build
+
 Robot Application
 ```bash
 cd robot_ws
-vcs import < .rosinstall
-rosdep install --from-paths src --ignore-src -r -y
 colcon build
 ```
+
 Simulation Application
 ```bash
 cd simulation_ws
-vcs import < .rosinstall
-rosdep install --from-paths src --ignore-src -r -y
 colcon build
 ```
 
