@@ -3,8 +3,9 @@ set -ex
 
 if [ -d "/opt/ros/melodic" ];
 then
-        echo "ROS Melodic is already installed. Skipping ROS Installation. ROS_DISTRO = $ROS_DISTRO"
+        echo "ROS Melodic is already installed. Skipping ROS Installation."
         source /opt/ros/melodic/setup.bash
+
 elif [ ! -d "/opt/ros" ];
 then
         echo "Installing ROS Melodic."
@@ -20,11 +21,12 @@ then
         #Install ROS Melodic
         apt install -y ros-melodic-desktop-full
         source /opt/ros/melodic/setup.bash
-else    #Warning your ROS Distro $ROS_DISTRO is not supported for the Hello World Sample Application
-        #it may not work.
-        echo "Warning your ROS Distro $ROS_DISTRO is not supported for AWS RoboMaker Hello World Sample Application ros1 branch."
-fi
 
+else    
+        #Warning your ROS Distro $ROS_DISTRO is not supported for the Hello World Sample Application
+        #it may not work.
+        echo "Warning your ROS Distro is not supported for AWS RoboMaker Hello World Sample Application ros1 branch."
+fi
 
 #setup key for colcon bundle
 apt-key adv --fetch-keys 'http://packages.osrfoundation.org/gazebo.key'
@@ -40,7 +42,6 @@ rosdep update
 apt-get install -y python3-apt python3-pip python3-vcstool
 pip3 install -U setuptools colcon-common-extensions colcon-ros-bundle
 
-###
 cd robot_ws
 vcs import < .rosinstall
 rosdep install --from-paths src --ignore-src -r -y
