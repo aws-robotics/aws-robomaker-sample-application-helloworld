@@ -11,24 +11,29 @@ The following will be installed:
 - [vcstool](https://github.com/dirk-thomas/vcstool#how-to-install-vcstool) - Used to pull in sample app dependencies that are only available from source, not from apt or pip.
 - [rosdep](http://wiki.ros.org/rosdep#Installing_rosdep) - rosdep is a command-line tool for installing system dependencies of ROS packages.
 
-If ROS is detected, then ROS Installation will be skipped, otherwise ROS Melodic will be installed.
+If ROS is detected, then ROS Installation will be skipped.
 - [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu) - Other versions may work, however they have not been tested
 
 
+- *Full setup including ROS install*
+currently only melodic is supported
 ```bash
-source scripts/setup.sh
-
+source scripts/setup.sh --install-ros melodic
 ```
 
+- *Setup without ROS installation*
+```bash
+source scripts/setup.sh
+```
 ## Build
 
-Robot Application
+- *Robot Application*
 ```bash
 cd robot_ws
 colcon build
 ```
 
-Simulation Application
+- *Simulation Application*
 ```bash
 cd simulation_ws
 colcon build
