@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-set -x
+set -ex
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        --install-ros) ros_distro_to_install=$2; shift ;;  
+        --install-ros) ros_distro=$2; shift ;;  
     esac
     shift
 done
@@ -11,7 +11,7 @@ done
 supported_ros_distros=("melodic")
 
 install_ros(){
-        echo "Installing ROS $ros_distro_to_install"
+        echo "Installing ROS $ros_distro"
         #Install ROS Prerequisites
         apt update
         apt-get install -y lsb-release gnupg2 curl && apt-get clean all
@@ -21,9 +21,9 @@ install_ros(){
         curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xC1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' | apt-key add - 
         apt update
 
-        #Install ROS $ros_distro_to_install
-        apt install -y ros-$ros_distro_to_install-desktop-full
-        source /opt/ros/$ros_distro_to_install/setup.bash
+        #Install ROS $ros_distro
+        apt install -y ros-$ros_distro-desktop-full
+        source /opt/ros/$ros_distro/setup.bash
 }
 
 
@@ -45,35 +45,68 @@ setup_sample_app(){
         cd robot_ws
         vcs import < .rosinstall
         rosdep install --from-paths src --ignore-src -r -y
-
         cd ..
 
         cd simulation_ws
         vcs import < .rosinstall
         rosdep install --from-paths src --ignore-src -r -y
-           
+        cd ..
 }
 
-echo $ros_distro_to_install
-if [ -z "$ros_distro_to_install" ];
+if [ -d "/opt/ros" ];
 then
-        echo "No ROS installation selected."
-        setup_sample_app
-        exit 0
-elif [[ ! " ${supported_ros_distros[@]} " =~ " ${ros_distro_to_install} " ]]; #check if item in list
+        echo "ROS is already installed"
+        if [ ! -z "$ros_distro" ];
+        then
+                echo "ignoring request to install $ros_distro "
+        fi
+
+        found_supported_ros=false
+        #check if their ros installation(s) are supported
+        for distro in $supported_ros_distros
+        do
+                if [ -d "/opt/ros/$distro" ]
+                then
+                        source /opt/ros/$distro/setup.bash
+                        #save to verify installation below
+                        ros_distro=$distro
+                        found_supported_ros=true
+                        break
+                fi
+        done
+
+        #if supported versions are not found
+        if [ ! found_supported_ros ]
+        then
+                echo "ERROR: your installed ROS Distro is not supported.  Exiting." 
+                exit 1
+        fi
+
+elif [ -z "$ros_distro" ];
 then
-        echo "The selected --install-ros <ros-distro> is not supported. If you want to try unsupported versions of ROS \
-please install it yourself, and rerun this script without specifying --install-ros".
-        exit 0
-elif [ -d "/opt/ros/$ros_distro_to_install" ];
-then
-        echo "ROS $ros_distro_to_install is already installed. Skipping ROS Installation."
-        source /opt/ros/$ros_distro_to_install/setup.bash
-elif [ ! -d "/opt/ros" ];
-then
+        echo "No ROS Installation found and no ROS Distro specified.  Defaulting to installing ROS Melodic"
+        ros_distro="melodic"
         install_ros 
-else    
-        echo "Warning your installed ROS Distro is not supported."
+        source /opt/ros/$ros_distro/setup.bash
+elif [[  " ${supported_ros_distros[@]} " =~ " ${ros_distro} " ]]; #check if item in list
+then
+        echo "No ROS Installation found, and '$ros_distro' is supported.  Installing $ros_distro"
+        install_ros 
+        source /opt/ros/$ros_distro/setup.bash
+elif [[ ! " ${supported_ros_distros[@]} " =~ " ${ros_distro} " ]]; #check if item in list
+then
+        echo "The selected --install-ros <ros-distro> is not supported. Exiting."
+        exit 0
 fi
+
+#Verify Installation
+if [ $ROS_DISTRO != $ros_distro ];
+then
+        echo "ROS Installation is not valid"
+        exit 1
+else
+        echo "ROS Installation is valid"
+fi
+
 
 setup_sample_app

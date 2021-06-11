@@ -15,16 +15,12 @@ If ROS is detected, then ROS Installation will be skipped.
 - [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu) - Other versions may work, however they have not been tested
 
 
-- *Full setup including ROS install*
-currently only melodic is supported
-```bash
-source scripts/setup.sh --install-ros melodic
-```
-
-- *Setup without ROS installation*
+- *Full Setup Including ROS Install*
+currently only melodic is supported, ROS Installation will be skipped if its already present.
 ```bash
 source scripts/setup.sh
 ```
+
 ## Build
 
 - *Robot Application*
