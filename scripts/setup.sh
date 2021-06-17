@@ -11,7 +11,7 @@ done
 supported_ros_distros=("melodic")
 
 install_ros(){
-        echo "Installing ROS $ros_distro"
+        echo "Installing ROS $ros_distro" 
         #Install ROS Prerequisites
         apt update
         apt-get install -y lsb-release gnupg2 curl && apt-get clean all
@@ -28,7 +28,7 @@ install_ros(){
 
 
 setup_sample_app(){
-        echo "Setting up sample app"
+        echo "Setting up sample application. Installing tools and dependencies."
         #setup key for colcon bundle
         apt-key adv --fetch-keys 'http://packages.osrfoundation.org/gazebo.key'
         apt update
@@ -55,10 +55,10 @@ setup_sample_app(){
 
 if [ -d "/opt/ros" ];
 then
-        echo "ROS is already installed"
+        echo "A ROS installation already exists in your environment."
         if [ ! -z "$ros_distro" ];
         then
-                echo "ignoring request to install $ros_distro "
+                echo "Ignoring request to install $ros_distro because a ROS installation already exists in your environment."
         fi
 
         found_supported_ros=false
@@ -84,7 +84,7 @@ then
 
 elif [ -z "$ros_distro" ];
 then
-        echo "No ROS Installation found and no ROS Distro specified.  Defaulting to installing ROS Melodic"
+        echo "No ROS Installation was found and no ROS Distro was specified.  Defaulting to installing ROS Melodic"
         ros_distro="melodic"
         install_ros 
         source /opt/ros/$ros_distro/setup.bash
@@ -95,17 +95,17 @@ then
         source /opt/ros/$ros_distro/setup.bash
 elif [[ ! " ${supported_ros_distros[@]} " =~ " ${ros_distro} " ]]; #check if item in list
 then
-        echo "The selected --install-ros <ros-distro> is not supported. Exiting."
+        echo "The selected ROS Distro $ros_distro is not supported. Exiting."
         exit 0
 fi
 
 #Verify Installation
 if [ $ROS_DISTRO != $ros_distro ];
 then
-        echo "ROS Installation is not valid"
+        echo "The ROS installation was unsuccessful, Sample Application setup cannot continue.  Exiting."
         exit 1
 else
-        echo "ROS Installation is valid"
+        echo "ROS Installation was successful, continuing with Sample Application setup."
 fi
 
 
