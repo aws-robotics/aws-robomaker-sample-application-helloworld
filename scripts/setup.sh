@@ -78,7 +78,7 @@ then
         #if supported versions are not found
         if [ ! found_supported_ros ]
         then
-                echo "ERROR: your installed ROS Distro is not supported.  Exiting." 
+                echo "ERROR: your installed ROS Distro(s) is not supported.  Exiting." 
                 exit 1
         fi
 
@@ -90,7 +90,7 @@ then
         source /opt/ros/$ros_distro/setup.bash
 elif [[  " ${supported_ros_distros[@]} " =~ " ${ros_distro} " ]]; #check if item in list
 then
-        echo "No ROS Installation found, and '$ros_distro' is supported.  Installing $ros_distro"
+        echo "No ROS Installation found.  Installing $ros_distro"
         install_ros 
         source /opt/ros/$ros_distro/setup.bash
 elif [[ ! " ${supported_ros_distros[@]} " =~ " ${ros_distro} " ]]; #check if item in list
