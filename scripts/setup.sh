@@ -93,8 +93,8 @@ then
 
 elif [ -z "$ros_distro" ];
 then
-        echo "No ROS Installation was found and no ROS Distro was specified.  Defaulting to installing ROS Melodic"
-        ros_distro="melodic"
+        echo "No ROS Installation was found and no ROS Distro was specified.  Defaulting to installing ROS Foxy"
+        ros_distro="foxy"
         install_ros 
         source /opt/ros/$ros_distro/setup.bash
 elif [[  " ${supported_ros_distros[@]} " =~ " ${ros_distro} " ]]; #check if item in list
