@@ -30,8 +30,10 @@ install_ros(){
         apt update
 
         # #Install ROS $ros_distro
-        apt install -y ros-$ros_distro-desktop-full
+        apt install -y ros-$ros_distro-desktop
         source /opt/ros/$ros_distro/setup.bash
+
+        apt install ros-$ros_distro-gazebo-ros-pkgs
 
 }
 
