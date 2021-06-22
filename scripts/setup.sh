@@ -33,7 +33,7 @@ install_ros(){
         apt install -y ros-$ros_distro-desktop
         source /opt/ros/$ros_distro/setup.bash
 
-        apt install ros-$ros_distro-gazebo-ros-pkgs
+        apt -y install ros-$ros_distro-gazebo-ros-pkgs
 
 }
 
@@ -43,7 +43,7 @@ setup_sample_app(){
         #setup key for colcon bundle
         apt-key adv --fetch-keys 'http://packages.osrfoundation.org/gazebo.key'
         apt update
-        apt install -y python-rosdep git
+        apt install -y python3-rosdep git
         if [ ! -f "/etc/ros/rosdep/sources.list.d/20-default.list" ];
         then
                 rosdep init
@@ -51,7 +51,7 @@ setup_sample_app(){
         rosdep update
 
         apt-get install -y python3-apt python3-pip python3-vcstool
-        pip3 install -U setuptools colcon-common-extensions colcon-ros-bundle
+        pip3 install -U setuptools colcon-ros-bundle
 
         cd robot_ws
         vcs import < .rosinstall
