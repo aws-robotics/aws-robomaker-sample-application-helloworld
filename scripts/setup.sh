@@ -50,8 +50,8 @@ setup_sample_app(){
         fi
         rosdep update
 
-        apt-get install -y python3-apt python3-pip python3-vcstool
-        pip3 install -U setuptools colcon-ros-bundle
+        apt-get install -y python3-apt python3-pip python3-vcstool python3-testresources
+        pip3 install -U pytest setuptools colcon-ros-bundle
 
         cd robot_ws
         vcs import < .rosinstall
