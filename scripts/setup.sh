@@ -12,7 +12,7 @@ supported_ros_distros=("foxy")
 
 install_ros(){
         echo "Installing ROS $ros_distro" 
-
+        export DEBIAN_FRONTEND=noninteractive
 
         #Install ROS Prerequisites
         locale  # check for UTF-8
