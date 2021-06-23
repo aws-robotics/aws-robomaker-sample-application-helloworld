@@ -43,7 +43,8 @@ setup_sample_app(){
         #setup key for colcon bundle
         apt-key adv --fetch-keys 'http://packages.osrfoundation.org/gazebo.key'
         apt update
-        apt install -y python3-rosdep git
+        apt install -y python3-rosdep git wget
+        wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
         if [ ! -f "/etc/ros/rosdep/sources.list.d/20-default.list" ];
         then
                 rosdep init
