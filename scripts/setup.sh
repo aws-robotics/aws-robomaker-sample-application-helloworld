@@ -44,7 +44,6 @@ setup_sample_app(){
         apt-key adv --fetch-keys 'http://packages.osrfoundation.org/gazebo.key'
         apt update
         apt install -y python3-rosdep git wget
-        wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
         if [ ! -f "/etc/ros/rosdep/sources.list.d/20-default.list" ];
         then
                 rosdep init
@@ -63,6 +62,9 @@ setup_sample_app(){
         vcs import < .rosinstall
         rosdep install --from-paths src --ignore-src -r -y
         cd ..
+
+        https://github.com/colcon/colcon-bundle/issues/100
+        wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
 }
 
 if [ -d "/opt/ros" ];
