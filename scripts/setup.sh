@@ -14,6 +14,7 @@ install_ros(){
         echo "Installing ROS $ros_distro" 
         export DEBIAN_FRONTEND=noninteractive
 
+        #https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html
         #Install ROS Prerequisites
         locale  # check for UTF-8
 
@@ -26,13 +27,16 @@ install_ros(){
 
         apt update &&  apt install -y curl gnupg2 lsb-release
         curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
+        curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
         echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
+       
         apt update
 
         # #Install ROS $ros_distro
         apt install -y ros-$ros_distro-desktop
         source /opt/ros/$ros_distro/setup.bash
 
+        #install gazebo
         apt -y install ros-$ros_distro-gazebo-ros-pkgs
 
 }
@@ -43,7 +47,7 @@ setup_sample_app(){
         #setup key for colcon bundle
         apt-key adv --fetch-keys 'http://packages.osrfoundation.org/gazebo.key'
         apt update
-        apt install -y python3-rosdep git wget
+        apt install -y python3-rosdep git
         if [ ! -f "/etc/ros/rosdep/sources.list.d/20-default.list" ];
         then
                 rosdep init
@@ -63,8 +67,7 @@ setup_sample_app(){
         rosdep install --from-paths src --ignore-src -r -y
         cd ..
 
-        https://github.com/colcon/colcon-bundle/issues/100
-        wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
+        
 }
 
 if [ -d "/opt/ros" ];
