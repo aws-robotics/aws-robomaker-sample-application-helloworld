@@ -52,39 +52,6 @@ jobs:
         ros-distro: ${{ matrix.distro }}
         workspace-dir: simulation_ws
         colcon-bundle-retries: 3
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1.5.4
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_ROS2 }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ROS2 }}
-        aws-region: ${{ secrets.AWS_REGION }}
-      if: ${{ github.event_name == 'schedule' && contains(steps.robot_ws_build.outcome, 'success') && contains(steps.simulation_ws_build.outcome, 'success') }}
-    - id: upload_bundle
-      name: Upload bundle to S3
-      uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@3.0.3
-      env:
-        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_ROS2 }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        FILES: 'sources.zip sources.tar.gz robot_ws.tar simulation_ws.tar'
-        DEST: 'travis/hello-world/${{ matrix.distro }}/${{  matrix.gazebo  }}/${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}/'
-      if: ${{ github.event_name == 'schedule' && contains(steps.robot_ws_build.outcome, 'success') && contains(steps.simulation_ws_build.outcome, 'success') }} # upload to S3 on "schedule" build if the build was successful
-    - name: Get time stamp
-      id: time
-      run: echo "::set-output name=timestamp::$(date +%s)"
-      if: ${{ github.event_name == 'schedule' && contains(steps.robot_ws_build.outcome, 'success') && contains(steps.simulation_ws_build.outcome, 'success') }}
-    - name: Update App-manifest version number
-      id: update-app-manifest
-      uses: aws-robotics/aws-robomaker-github-actions/codecommit-put-file-action@3.0.3
-      env:
-        AWS_CODECOMMIT_REPO_NAME: '${{ secrets.AWS_CODECOMMIT_REPO_NAME_PREFIX_HELLO_WORLD }}-${{ matrix.distro }}-gazebo${{ matrix.gazebo }}'
-        AWS_CODECOMMIT_BRANCH_NAME: ${{ secrets.AWS_CODECOMMIT_BRANCH_NAME_HELLO_WORLD }}
-        DEST_FILE_CONTENT: '{"application_version": "${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}", "timestamp":"${{ steps.time.outputs.timestamp }}"}'
-        DEST_FILE_PATH: '/version.json'
-        COMMIT_MSG: 'Updating to version ${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}. Commit for this version bump: ${{ github.sha }}.'
-        USER_EMAIL: 'ros-contributions@amazon.com'
-        USER_NAME: 'ros-contributions'
-      if: ${{ github.event_name == 'schedule' && contains(steps.robot_ws_build.outcome, 'success') && contains(steps.simulation_ws_build.outcome, 'success') }} # Update app-manifest version number if the build was successful
-  
 
   log_workflow_status_to_cloudwatch:
     runs-on: ubuntu-latest
@@ -103,34 +70,10 @@ jobs:
     - name: Log Robot Workspace Build Status
       uses: ros-tooling/action-cloudwatch-metrics@0.0.4
       with:
-        metric-dimensions: >-
-          [
-            { "Name": "github.event_name", "Value": "${{ github.event_name }}" },
-            { "Name": "github.ref", "Value": "refs/heads/ros2" },
-            { "Name": "github.repository", "Value": "${{ github.repository }}" }
-          ]
         namespace: RobotWorkspaceBuild
         metric-value: ${{ contains(needs.build_and_bundle_ros2.outputs.robot_ws_build_result, 'success') }}
     - name: Log Simulation Workspace Build Status
       uses: ros-tooling/action-cloudwatch-metrics@0.0.4
       with:
-        metric-dimensions: >-
-          [
-            { "Name": "github.event_name", "Value": "${{ github.event_name }}" },
-            { "Name": "github.ref", "Value": "refs/heads/ros2" },
-            { "Name": "github.repository", "Value": "${{ github.repository }}" }
-          ]
         namespace: SimulationWorkspaceBuild
         metric-value: ${{ contains(needs.build_and_bundle_ros2.outputs.simulation_ws_build_result, 'success') }}
-    - name: Log Bundle Upload Status
-      uses: ros-tooling/action-cloudwatch-metrics@0.0.4
-      with:
-        metric-dimensions: >-
-          [
-            { "Name": "github.event_name", "Value": "${{ github.event_name }}" },
-            { "Name": "github.ref", "Value": "refs/heads/ros2" },
-            { "Name": "github.repository", "Value": "${{ github.repository }}" }
-          ]
-        namespace: BundleUpload
-        metric-value: ${{ contains(needs.build_and_bundle_ros2.result, 'success') }}
-      if: ${{ github.event_name == 'schedule' }}
