@@ -27,6 +27,7 @@ install_ros(){
 
         apt update &&  apt install -y curl gnupg2 lsb-release
         curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
+        curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
         echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
 
         apt update
