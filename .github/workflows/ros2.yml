@@ -4,58 +4,59 @@ on:
   push:
     branches:
       - ros2
-  # this will currently never trigger on the non-default branch (ros2 scheduled build will be triggered from the default(ros1) branch)
+# this will currently never trigger on the non-default branch (ros2 scheduled build will be triggered from the default(ros1) branch)
   schedule:
-    - cron: '0 14 * * *'  # run at 2 pm everyday
+    - cron: '0 2,14 * * *'  # run at 2am & 2pm UTC i.e. 7pm & 7am PST everyday
 
 jobs:
   build_and_bundle_ros2:
     strategy:
       matrix:
-        distro: ['dashing']
-        gazebo: [9]
+        distro: ['foxy']
+        gazebo: [11]
         include:
-        - distro: dashing
-          gazebo: 9
-          ubuntu_distro: bionic
+        - distro: foxy
+          gazebo: 11
+          ubuntu_distro: focal
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'schedule' || github.ref == 'refs/heads/ros2' }}
     name: 'Build and Bundle (ROS2)'
     container:
-      image: rostooling/setup-ros-docker:ubuntu-${{ matrix.ubuntu_distro }}-ros-${{ matrix.distro }}-ros-base-latest
+      image: ubuntu:${{ matrix.ubuntu_distro }}
     outputs:
       robot_ws_build_result: ${{ steps.robot_ws_build.outcome }}
       simulation_ws_build_result: ${{ steps.simulation_ws_build.outcome }}
     steps:
     - name: Checkout Branch
       uses: actions/checkout@v1
+      with:
+        ref: 'ros2'
     - name: Setup Permissions
       run: |
         # TODO(ros-tooling/setup-ros-docker#7): calling chown is necessary for now
         sudo chown -R rosbuild:rosbuild "$HOME" .
     - name: Scan using git-secrets
-      uses: aws-robotics/aws-robomaker-github-actions/git-secrets-scan-action@2.4.2
+      uses: aws-robotics/aws-robomaker-github-actions/git-secrets-scan-action@3.0.3
     - id: robot_ws_build
       name: Build and Bundle Robot Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.4.2
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@3.0.3
       with:
         ros-distro: ${{ matrix.distro }}
-        gazebo-version: ${{ matrix.gazebo }}
         workspace-dir: robot_ws
         generate-sources: true
         colcon-bundle-retries: 3
     - id: simulation_ws_build
       name: Build and Bundle Simulation Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.4.2
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@3.0.3
       with:
         ros-distro: ${{ matrix.distro }}
-        gazebo-version: ${{ matrix.gazebo }}
         workspace-dir: simulation_ws
         colcon-bundle-retries: 3
 
   log_workflow_status_to_cloudwatch:
     runs-on: ubuntu-latest
     container:
-      image: ubuntu:bionic
+      image: ubuntu:focal
     needs:
     - build_and_bundle_ros2
     if: ${{ always() && github.event_name != 'pull_request' }}
