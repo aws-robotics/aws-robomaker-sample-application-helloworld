@@ -21,7 +21,7 @@ jobs:
     if: ${{ github.event_name == 'schedule' || github.ref == 'refs/heads/ros2' }}
     name: 'Build and Bundle (ROS2)'
     container:
-      image: rostooling/setup-ros-docker:ubuntu-${{ matrix.ubuntu_distro }}-ros-${{ matrix.distro }}-ros-base-latest
+      image: ubuntu:${{ matrix.ubuntu_distro }}
     outputs:
       robot_ws_build_result: ${{ steps.robot_ws_build.outcome }}
       simulation_ws_build_result: ${{ steps.simulation_ws_build.outcome }}
@@ -35,22 +35,20 @@ jobs:
         # TODO(ros-tooling/setup-ros-docker#7): calling chown is necessary for now
         sudo chown -R rosbuild:rosbuild "$HOME" .
     - name: Scan using git-secrets
-      uses: aws-robotics/aws-robomaker-github-actions/git-secrets-scan-action@2.5.1
+      uses: aws-robotics/aws-robomaker-github-actions/git-secrets-scan-action@3.0.3
     - id: robot_ws_build
       name: Build and Bundle Robot Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.5.1
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@3.0.3
       with:
         ros-distro: ${{ matrix.distro }}
-        gazebo-version: ${{ matrix.gazebo }}
         workspace-dir: robot_ws
         generate-sources: true
         colcon-bundle-retries: 3
     - id: simulation_ws_build
       name: Build and Bundle Simulation Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@2.5.1
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@3.0.3
       with:
         ros-distro: ${{ matrix.distro }}
-        gazebo-version: ${{ matrix.gazebo }}
         workspace-dir: simulation_ws
         colcon-bundle-retries: 3
     - name: Configure AWS Credentials
@@ -62,12 +60,12 @@ jobs:
       if: ${{ github.event_name == 'schedule' && contains(steps.robot_ws_build.outcome, 'success') && contains(steps.simulation_ws_build.outcome, 'success') }}
     - id: upload_bundle
       name: Upload bundle to S3
-      uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@2.5.1
+      uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@3.0.3
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_ROS2 }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
         FILES: 'sources.zip sources.tar.gz robot_ws.tar simulation_ws.tar'
-        DEST: 'travis/hello-world/${{ steps.robot_ws_build.outputs.ros-distro }}/${{ steps.robot_ws_build.outputs.gazebo-version }}/${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}/'
+        DEST: 'travis/hello-world/${{ matrix.distro }}/${{  matrix.gazebo  }}/${{ steps.robot_ws_build.outputs.sample-app-version }}.${{ github.run_number }}/'
       if: ${{ github.event_name == 'schedule' && contains(steps.robot_ws_build.outcome, 'success') && contains(steps.simulation_ws_build.outcome, 'success') }} # upload to S3 on "schedule" build if the build was successful
     - name: Get time stamp
       id: time
@@ -75,7 +73,7 @@ jobs:
       if: ${{ github.event_name == 'schedule' && contains(steps.robot_ws_build.outcome, 'success') && contains(steps.simulation_ws_build.outcome, 'success') }}
     - name: Update App-manifest version number
       id: update-app-manifest
-      uses: aws-robotics/aws-robomaker-github-actions/codecommit-put-file-action@2.5.1
+      uses: aws-robotics/aws-robomaker-github-actions/codecommit-put-file-action@3.0.3
       env:
         AWS_CODECOMMIT_REPO_NAME: '${{ secrets.AWS_CODECOMMIT_REPO_NAME_PREFIX_HELLO_WORLD }}-${{ matrix.distro }}-gazebo${{ matrix.gazebo }}'
         AWS_CODECOMMIT_BRANCH_NAME: ${{ secrets.AWS_CODECOMMIT_BRANCH_NAME_HELLO_WORLD }}
