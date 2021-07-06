@@ -30,10 +30,6 @@ jobs:
       uses: actions/checkout@v1
       with:
         ref: 'ros2'
-    - name: Setup Permissions
-      run: |
-        # TODO(ros-tooling/setup-ros-docker#7): calling chown is necessary for now
-        sudo chown -R rosbuild:rosbuild "$HOME" .
     - name: Scan using git-secrets
       uses: aws-robotics/aws-robomaker-github-actions/git-secrets-scan-action@3.0.3
     - id: robot_ws_build
