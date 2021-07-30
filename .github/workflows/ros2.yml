@@ -5,7 +5,7 @@ on:
     branches:
       - ros2
   schedule:
-    - cron: '0 2,14 * * *'  # run at 2am & 2pm UTC i.e. 7pm & 7am PST everyday
+    - cron: '0 */2 * * *'  # runs every 2 hrs on a daily basis
 
 jobs:
   build_and_bundle_ros2:
