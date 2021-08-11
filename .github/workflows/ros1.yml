@@ -32,7 +32,7 @@ jobs:
       uses: aws-robotics/aws-robomaker-github-actions/git-secrets-scan-action@3.0.3
     - id: robot_ws_build
       name: Build and Bundle Robot Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@3.0.3
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@3.0.4
       with:
         ros-distro: ${{ matrix.distro }}
         workspace-dir: robot_ws
@@ -40,7 +40,7 @@ jobs:
         colcon-bundle-retries: 3
     - id: simulation_ws_build
       name: Build and Bundle Simulation Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@3.0.3
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@3.0.4
       with:
         ros-distro: ${{ matrix.distro }}
         workspace-dir: simulation_ws
