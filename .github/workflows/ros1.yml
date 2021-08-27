@@ -54,7 +54,7 @@ jobs:
       if: ${{ github.event_name == 'schedule' && contains(steps.robot_ws_build.outcome, 'success') && contains(steps.simulation_ws_build.outcome, 'success') }}
     - id: upload_bundle
       name: Upload bundle to S3
-      uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@:3.0.6
+      uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@3.0.6
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_ROS1 }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
