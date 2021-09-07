@@ -31,22 +31,22 @@ jobs:
       with:
         ref: 'ros2'
     - name: Scan using git-secrets
-      uses: aws-robotics/aws-robomaker-github-actions/git-secrets-scan-action@3.0.3
+      uses: aws-robotics/aws-robomaker-github-actions/git-secrets-scan-action@3.0.6
     - id: robot_ws_build
       name: Build and Bundle Robot Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@3.0.3
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@3.0.6
       with:
         ros-distro: ${{ matrix.distro }}
         workspace-dir: robot_ws
         generate-sources: true
-        colcon-bundle-retries: 3
+        retries: 3
     - id: simulation_ws_build
       name: Build and Bundle Simulation Workspace
-      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@3.0.3
+      uses: aws-robotics/aws-robomaker-github-actions/robomaker-sample-app-ci@3.0.6
       with:
         ros-distro: ${{ matrix.distro }}
         workspace-dir: simulation_ws
-        colcon-bundle-retries: 3
+        retries: 3
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1.5.4
       with:
@@ -56,7 +56,7 @@ jobs:
       if: ${{ github.event_name == 'schedule' && contains(steps.robot_ws_build.outcome, 'success') && contains(steps.simulation_ws_build.outcome, 'success') }}
     - id: upload_bundle
       name: Upload bundle to S3
-      uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@3.0.3
+      uses: aws-robotics/aws-robomaker-github-actions/s3-cp-action@3.0.6
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_ROS2 }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
@@ -69,7 +69,7 @@ jobs:
       if: ${{ github.event_name == 'schedule' && contains(steps.robot_ws_build.outcome, 'success') && contains(steps.simulation_ws_build.outcome, 'success') }}
     - name: Update App-manifest version number
       id: update-app-manifest
-      uses: aws-robotics/aws-robomaker-github-actions/codecommit-put-file-action@3.0.3
+      uses: aws-robotics/aws-robomaker-github-actions/codecommit-put-file-action@3.0.6
       env:
         AWS_CODECOMMIT_REPO_NAME: '${{ secrets.AWS_CODECOMMIT_REPO_NAME_PREFIX_HELLO_WORLD }}-${{ matrix.distro }}-gazebo${{ matrix.gazebo }}'
         AWS_CODECOMMIT_BRANCH_NAME: ${{ secrets.AWS_CODECOMMIT_BRANCH_NAME_HELLO_WORLD }}
