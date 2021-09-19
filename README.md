@@ -67,9 +67,20 @@ Launch the application with the following commands:
     ros2 launch hello_world_simulation empty_world.launch.py
     ```
 
+- *Running Simulation Application With Visualization*
+    ```bash
+    export DISPLAY=:0
+    source /usr/share/gazebo/setup.sh
+    source simulation_ws/install/local_setup.sh
+    ros2 launch hello_world_simulation empty_world.launch.py gui:=true
+    ```
+
 Note that when running robot applications on a robot, `use_sim_time` should be set to `false` (which is the default value in `deploy_rotate.launch.py`). When running robot applications along with simulation applications, `use_sim_time` should be set to `true` for both applications (which is the default value in both `rotate.launch.py` and `empty_word.launch.py`).
 
 When running simulation applications, run command with `gui:=true` to run gazebo client for visualization
+
+If the simulation fails with visualization, you can try to set `export DISPLAY=:1`
+
 
 ## Run simulation with a WorldForge world
 
@@ -95,11 +106,11 @@ source simulation_ws/install/local_setup.sh
 ros2 launch hello_world_simulation worldforge_world.launch.py
 ```
 
-By default, WorldForge packages will load the exported world. To override, specify the environment variable `WORLD_ID`. 
+By default, WorldForge packages will load the exported world. To override, specify the environment variable `WORLD_ID`.
 
 ```bash
 # use worldId found in "src/aws_robomaker_worldforge_worlds/worlds"
-# e.g, generation_05wq8sybdcn2_world_1 
+# e.g, generation_05wq8sybdcn2_world_1
 export WORLD_ID=<worldId>  
 ```
 
