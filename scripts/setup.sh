@@ -50,6 +50,9 @@ setup_sample_app(){
         cd simulation_ws
         vcs import < .rosinstall
         rosdep install --from-paths src --ignore-src -r -y
+        # need to install pyparsing==2.0.2 at the end to make sure that it overwrites 
+        # pyparsing-3.0 to make sure colcon build works
+        pip3 install -U pyparsing==2.0.2
         cd ..
 }
 
