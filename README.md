@@ -71,7 +71,7 @@ Launch the application with the following commands:
 
 Note that when running robot applications on a robot, `use_sim_time` should be set to `false` (which is the default value in `deploy_rotate.launch.py`). When running robot applications along with simulation applications, `use_sim_time` should be set to `true` for both applications (which is the default value in both `rotate.launch.py` and `empty_word.launch.py`).
 
-When running simulation applications, run command with `gui:=true` to run gazebo client for visualization
+When running simulation applications, run command with `gui:=true` to run gazebo client for visualization. If you fail to see the visualization on your intended display, try setting `DISPLAY` variable to point to the appropriate display.
 
 ## Run simulation with a WorldForge world
 
