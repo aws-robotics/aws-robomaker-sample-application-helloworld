@@ -122,15 +122,15 @@ vcs import simulation_ws < simulation_ws/.rosinstall
 
 # Building Robot Application Docker Image
 DOCKER_BUILDKIT=1 docker build . \
---build-arg ROS_DISTRO=melodic \
+--build-arg ROS_DISTRO=foxy \
 --build-arg LOCAL_WS_DIR=./robot_ws \
 --build-arg APP_NAME=helloworld-robot-app \
 -t robomaker-helloworld-robot-app
 
 # Building Simulation Application Docker Image
 DOCKER_BUILDKIT=1 docker build . \
---build-arg GAZEBO_VERSION=gazebo-9 \
---build-arg ROS_DISTRO=melodic \
+--build-arg GAZEBO_VERSION=gazebo-11 \
+--build-arg ROS_DISTRO=foxy \
 --build-arg LOCAL_WS_DIR=./simulation_ws \
 --build-arg APP_NAME=helloworld-sim-app \
 -t robomaker-helloworld-sim-app
