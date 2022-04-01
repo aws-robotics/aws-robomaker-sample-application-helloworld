@@ -10,7 +10,7 @@
 # ===================
 
 # ROS Distribution (ex: melodic, foxy, etc.)
-ARG ROS_DISTRO=melodic
+ARG ROS_DISTRO=foxy
 # Application Name (ex: helloworld)
 ARG APP_NAME=robomaker_app
 # Path to workspace directory on the host (ex: ./robot_ws)
@@ -18,7 +18,7 @@ ARG LOCAL_WS_DIR=workspace
 # User to create and use (default: robomaker)
 ARG USERNAME=robomaker
 # The gazebo version to use if applicable (ex: gazebo-9, gazebo-11)
-ARG GAZEBO_VERSION=gazebo-9
+ARG GAZEBO_VERSION=gazebo-11
 # Where to store the built application in the runtime image.
 ARG IMAGE_WS_DIR=/home/$USERNAME/workspace
 
