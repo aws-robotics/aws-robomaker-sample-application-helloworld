@@ -143,7 +143,7 @@ This produces the Docker Images `robomaker-helloworld-robot-app` and `robomaker-
 docker images
 ```
 
-You'll need to upload these to Amazon ECR, then you can use these files to
+You'll need to [upload these images to Amazon ECR](https://docs.aws.amazon.com/robomaker/latest/dg/development-publish-app-containers.html), then you can use these files to
 [create a robot application](https://docs.aws.amazon.com/robomaker/latest/dg/create-robot-application.html),
 [create a simulation application](https://docs.aws.amazon.com/robomaker/latest/dg/create-simulation-application.html),
 and [create a simulation job](https://docs.aws.amazon.com/robomaker/latest/dg/create-simulation-job.html) in RoboMaker. Visit the [preparing-ros-application-and-simulation-containers-for-aws-robomaker](https://aws.amazon.com/blogs/robotics/preparing-ros-application-and-simulation-containers-for-aws-robomaker/#:~:text=Bash-,Publish%20docker%20images%20to%20Amazon%20ECR,-Containers%20used%20by) blog post to find the steps to upload these docker images to Amazon ECR.
