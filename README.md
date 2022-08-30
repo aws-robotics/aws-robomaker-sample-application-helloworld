@@ -94,32 +94,46 @@ export WORLD_ID=<worldId>
 
 ## Using this sample with RoboMaker
 
-You first need to install colcon-ros-bundle. Python 3.5 or above is required.
+You first need to install [Docker](https://docs.docker.com/get-docker/) and [VCS Import Tool](http://wiki.ros.org/vcstool) (if you use VCS Import Tool). Python 3.5 or above is required.
 
 ```bash
-pip3 install -U setuptools
-pip3 install colcon-ros-bundle
+pip3 install vcstool
 ```
 
-After colcon-ros-bundle is installed you need to build your robot or simulation, then you can bundle with:
+After Docker and VCS Import Tool is installed you need to build your robot or simulation docker images:
 
 ```bash
-# Bundling Robot Application
-cd robot_ws
-source install/local_setup.sh
-colcon bundle
+# Import dependencies defined in .rosinstall to each source directory using vcs import
+vcs import robot_ws < robot_ws/.rosinstall
+vcs import simulation_ws < simulation_ws/.rosinstall
 
-# Bundling Simulation Application
-cd simulation_ws
-source install/local_setup.sh
-colcon bundle
+# Building Robot Application Docker Image
+DOCKER_BUILDKIT=1 docker build . \
+--build-arg ROS_DISTRO=melodic \
+--build-arg LOCAL_WS_DIR=./robot_ws \
+--build-arg APP_NAME=helloworld-robot-app \
+-t robomaker-helloworld-robot-app
+
+# Building Simulation Application Docker Image
+DOCKER_BUILDKIT=1 docker build . \
+--build-arg GAZEBO_VERSION=gazebo-9 \
+--build-arg ROS_DISTRO=melodic \
+--build-arg LOCAL_WS_DIR=./simulation_ws \
+--build-arg APP_NAME=helloworld-sim-app \
+-t robomaker-helloworld-sim-app
 ```
 
-This produces the artifacts `robot_ws/bundle/output.tar` and `simulation_ws/bundle/output.tar` respectively.
-You'll need to upload these to an s3 bucket, then you can use these files to
+This produces the Docker Images `robomaker-helloworld-robot-app` and `robomaker-helloworld-sim-app` respectively which you can view by running:
+
+```bash
+# Listing your Docker Images
+docker images
+```
+
+You'll need to [upload these images to Amazon ECR](https://docs.aws.amazon.com/robomaker/latest/dg/development-publish-app-containers.html), then you can use these files to
 [create a robot application](https://docs.aws.amazon.com/robomaker/latest/dg/create-robot-application.html),
 [create a simulation application](https://docs.aws.amazon.com/robomaker/latest/dg/create-simulation-application.html),
-and [create a simulation job](https://docs.aws.amazon.com/robomaker/latest/dg/create-simulation-job.html) in RoboMaker.
+and [create a simulation job](https://docs.aws.amazon.com/robomaker/latest/dg/create-simulation-job.html) in RoboMaker. Visit the [preparing-ros-application-and-simulation-containers-for-aws-robomaker](https://aws.amazon.com/blogs/robotics/preparing-ros-application-and-simulation-containers-for-aws-robomaker/#:~:text=Bash-,Publish%20docker%20images%20to%20Amazon%20ECR,-Containers%20used%20by) blog post to find the steps to upload these docker images to Amazon ECR.
 
 ## ROS Nodes launched by this Sample
 
