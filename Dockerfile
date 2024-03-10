@@ -80,7 +80,7 @@ WORKDIR $IMAGE_WS_DIR
 COPY --chown=$USERNAME:$USERNAME $LOCAL_WS_DIR/src $IMAGE_WS_DIR/src
 
 RUN sudo apt update && \
-    rosdep update && \
+    rosdep update --include-eol-distros && \
     rosdep fix-permissions
 
 # Note: This will install all dependencies.
